@@ -23,3 +23,5 @@ Route::group(['namespace' => 'Auth'], function() {
     Route::get('login', 'LoginController@index');
     Route::get('register', 'RegisterController@index');
 });
+
+Route::any('/test', 'TestController@test');
