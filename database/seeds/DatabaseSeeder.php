@@ -14,6 +14,7 @@ class DatabaseSeeder extends Seeder
         // $this->call(UsersTableSeeder::class);
         $this->call(ProjectSeeder::class);
         $this->call(CategorySeeder::class);
+        $this->call(AttributeSeeder::class);
         $this->call(BatchSeeder::class);
         $this->call(MailSeeder::class);
         $this->call(LogSeeder::class);
