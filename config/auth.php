@@ -67,7 +67,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => peteryan\User::class,
+            'model' => Peteryan\User::class,
         ],
 
         // 'users' => [

@@ -1,6 +1,6 @@
 <?php
 
-namespace peteryan\Http\Controllers;
+namespace Peteryan\Http\Controllers;
 
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;

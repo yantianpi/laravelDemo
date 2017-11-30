@@ -1,6 +1,6 @@
 <?php
 
-namespace peteryan\Exceptions;
+namespace Peteryan\Exceptions;
 
 use Exception;
 use Illuminate\Auth\AuthenticationException;

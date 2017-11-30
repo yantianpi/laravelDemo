@@ -12,7 +12,10 @@
 */
 
 Route::get('/', function () {
-    return view('index');
+    return view('index', [
+        'pageName' => 'Home',
+        'title' => 'Home',
+    ]);
 })->name('homepage');
 
 Route::get('/home', function () {
@@ -25,3 +28,10 @@ Route::group(['namespace' => 'Auth'], function() {
 });
 
 Route::any('/test', 'TestController@test');
+
+Route::any('/category', 'CategoryController@categoryList')->name('categorypage');
+Route::any('/attribute', 'AttributeController@attributeList')->name('attributepage');
+Route::any('/project', 'ProjectController@projectList')->name('projectpage');
+Route::any('/task', 'TaskController@taskList')->name('taskpage');
+Route::any('/mail', 'MailController@mailList')->name('mailpage');
+Route::any('/log', 'LogController@logList')->name('logpage');

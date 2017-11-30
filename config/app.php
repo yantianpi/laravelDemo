@@ -171,11 +171,11 @@ return [
         /*
          * Application Service Providers...
          */
-        peteryan\Providers\AppServiceProvider::class,
-        peteryan\Providers\AuthServiceProvider::class,
-        // peteryan\Providers\BroadcastServiceProvider::class,
-        peteryan\Providers\EventServiceProvider::class,
-        peteryan\Providers\RouteServiceProvider::class,
+        Peteryan\Providers\AppServiceProvider::class,
+        Peteryan\Providers\AuthServiceProvider::class,
+        // Peteryan\Providers\BroadcastServiceProvider::class,
+        Peteryan\Providers\EventServiceProvider::class,
+        Peteryan\Providers\RouteServiceProvider::class,
 
     ],
 

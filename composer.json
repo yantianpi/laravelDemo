@@ -19,7 +19,7 @@
             "database"
         ],
         "psr-4": {
-            "peteryan\\": "app/"
+            "Peteryan\\": "app/"
         }
     },
     "autoload-dev": {

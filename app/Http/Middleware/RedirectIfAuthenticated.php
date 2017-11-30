@@ -1,6 +1,6 @@
 <?php
 
-namespace peteryan\Http\Middleware;
+namespace Peteryan\Http\Middleware;
 
 use Closure;
 use Illuminate\Support\Facades\Auth;

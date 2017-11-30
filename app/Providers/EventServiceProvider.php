@@ -1,6 +1,6 @@
 <?php
 
-namespace peteryan\Providers;
+namespace Peteryan\Providers;
 
 use Illuminate\Support\Facades\Event;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -13,8 +13,8 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        'peteryan\Events\Event' => [
-            'peteryan\Listeners\EventListener',
+        'Peteryan\Events\Event' => [
+            'Peteryan\Listeners\EventListener',
         ],
     ];
 

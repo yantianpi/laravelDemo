@@ -41,26 +41,45 @@
                         <h3 class="panel-title">Navigation</h3>
                     </div>
                     <div class="list-group">
-                        <a class="list-group-item" href="{{ route('homepage') }}" aria-expanded="false" aria-controls="collapse_1">home</a>
-                        <a class="list-group-item" href="#" aria-expanded="false" aria-controls="collapse_2">record</a>
-                        <a class="list-group-item" href="#" aria-controls="collapse_1">mail</a>
-                        <a class="list-group-item" href="#" aria-controls="collapse_1">log</a>
+                        <a class="list-group-item" href="{{ route('homepage') }}" aria-expanded="false" aria-controls="collapse_1">
+                            home
+                        </a>
+                        <a class="list-group-item" href="{{ route('categorypage') }}" aria-expanded="false" aria-controls="collapse_2">
+                            category
+                        </a>
+                        <a class="list-group-item" href="{{ route('projectpage') }}" aria-expanded="false" aria-controls="collapse_2">
+                            project
+                        </a>
+                        <a class="list-group-item" href="{{ route('attributepage') }}" aria-expanded="false" aria-controls="collapse_2">
+                            attribute
+                        </a>
+                        <a class="list-group-item" href="{{ route('taskpage') }}" aria-expanded="false" aria-controls="collapse_2">
+                            task
+                        </a>
+                        <a class="list-group-item" href="{{ route('mailpage') }}" aria-controls="collapse_1">
+                            mail
+                        </a>
+                        <a class="list-group-item" href="{{ route('logpage') }}" aria-controls="collapse_1">
+                            log
+                        </a>
                     </div>
                 </div>
             </div>
             <div class="col-xs-20">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">
-                            @yield('pageName')
-                        </h3>
+                @section('pageContent')
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                                {{ $pageName or 'Home' }}
+                            </h3>
+                        </div>
+                        <div class="panel-body">
+                            @section('pageContentDetail')
+                                welcome!
+                            @show
+                        </div>
                     </div>
-                    <div class="panel-body">
-                        @section('pageContent')
-                            welcome!
-                        @show
-                    </div>
-                </div>
+                @show
             </div>
         </div>
     </main>

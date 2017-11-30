@@ -4,12 +4,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     {{-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ --}}
     <title>
-        @yield('title')
+        {{ $title or 'Home Page' }}
     </title>
 
     {{-- Bootstrap --}}
     {{-- <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"> --}}
     <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    {{--<link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">--}}
     @yield('custom-css')
     {{-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries --}}
     {{-- WARNING: Respond.js doesn't work if you view the page via file:// --}}

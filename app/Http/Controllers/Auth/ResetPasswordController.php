@@ -1,8 +1,8 @@
 <?php
 
-namespace peteryan\Http\Controllers\Auth;
+namespace Peteryan\Http\Controllers\Auth;
 
-use peteryan\Http\Controllers\Controller;
+use Peteryan\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 
 class ResetPasswordController extends Controller

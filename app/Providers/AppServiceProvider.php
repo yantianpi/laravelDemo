@@ -1,6 +1,6 @@
 <?php
 
-namespace peteryan\Providers;
+namespace Peteryan\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;

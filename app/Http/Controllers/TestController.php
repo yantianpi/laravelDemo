@@ -1,6 +1,6 @@
 <?php
 
-namespace peteryan\Http\Controllers;
+namespace Peteryan\Http\Controllers;
 
 use Illuminate\Http\Request;
 

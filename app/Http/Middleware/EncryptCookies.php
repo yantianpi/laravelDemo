@@ -1,6 +1,6 @@
 <?php
 
-namespace peteryan\Http\Middleware;
+namespace Peteryan\Http\Middleware;
 
 use Illuminate\Cookie\Middleware\EncryptCookies as BaseEncrypter;
 
