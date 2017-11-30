@@ -81,4 +81,11 @@ class AttributeController extends Controller
 
         ]);
     }
+
+    public function attributeModal(Request $request, $id) {
+        $attributeInfo = Attribute::findOrFail($id);
+        echo view('modal.attribute', [
+            'attributeInfo' => $attributeInfo,
+        ]);
+    }
 }

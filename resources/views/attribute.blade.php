@@ -2,6 +2,9 @@
 @section('custom-css')
     <link href="/css/attribute.css" type="text/css" rel="stylesheet" />
 @endsection
+@section('custom-js')
+    <script src="/js/attribute.js"></script>
+@endsection
 @section('pageContent')
     <div class="panel panel-default">
         <div class="panel-heading">
@@ -108,7 +111,11 @@
                                 <hr style="width: 90%"/>
                                 t:{{ $attributeInfo->Timestamp }}
                             </td>
-                            <td></td>
+                            <td>
+                                <button type="button" class="btn btn-info" data-toggle="modal" data-id="{{ $attributeInfo->Id }}" data-target="#oneModal">
+                                    详情
+                                </button>
+                            </td>
                         </tr>
                     @empty
                         <tr>

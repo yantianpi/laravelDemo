@@ -29,9 +29,17 @@ Route::group(['namespace' => 'Auth'], function() {
 
 Route::any('/test', 'TestController@test');
 
+/*
+ * list
+ */
 Route::any('/category', 'CategoryController@categoryList')->name('categorypage');
 Route::any('/attribute', 'AttributeController@attributeList')->name('attributepage');
 Route::any('/project', 'ProjectController@projectList')->name('projectpage');
 Route::any('/task', 'TaskController@taskList')->name('taskpage');
 Route::any('/mail', 'MailController@mailList')->name('mailpage');
 Route::any('/log', 'LogController@logList')->name('logpage');
+
+/*
+ * detail
+ */
+Route::any('/attribute/{id}', 'AttributeController@attributeModal')->where('id', '[0-9]+');

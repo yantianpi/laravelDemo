@@ -2,6 +2,7 @@
 @section('custom-css')
     <link href="/css/index.css" rel="stylesheet" type="text/css" />
 @endsection
+@section('oneModal', '')
 @section('pageContentDetail')
     <div class="flex-center position-ref full-height">
         @if (Route::has('login'))
