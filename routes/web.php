@@ -48,3 +48,4 @@ Route::any('/attribute/{id}', 'AttributeController@attributeDetail')->where('id'
 /*
  * add and update
  */
+Route::any('/attribute/edit/{id?}', 'AttributeController@attributeEdit')->where('id', '[0-9]+');

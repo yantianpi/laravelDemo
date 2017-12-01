@@ -23,6 +23,21 @@ class AttributeController extends Controller
         'ASC' => 'ASC',
         'DESC' => 'DESC',
     ];
+
+    private $contentTypeArray = [
+        'INT' => 'INT',
+        'STRING' => 'STRING',
+        'REGEX' => 'REGEX',
+        'FLOAT' => 'FLOAT',
+        'OTHER' => 'OTHER',
+    ];
+
+    /**
+     * atribute list
+     *
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function attributeList(Request $request) {
         $formData = $request->input('formData', []);
         $pageLimit = $request->input('pageLimit', 5);
@@ -39,30 +54,30 @@ class AttributeController extends Controller
         $tmpSort = isset($formData['sort']) ? $formData['sort'] : 'Id';
         $tmpOrder = isset($formData['order']) ? $formData['order'] : 'ASC';
         if (isset($this->sortArray[$tmpSort]) && isset($this->orderArray[$tmpOrder])) {
-            $attributeList = Attribute::where($whereArray)->orderBy($tmpSort, $tmpOrder)->paginate($pageLimit);
+            $attributeCollection = Attribute::where($whereArray)->orderBy($tmpSort, $tmpOrder)->paginate($pageLimit);
         } else {
-            $attributeList = Attribute::where($whereArray)->paginate($pageLimit);
+            $attributeCollection = Attribute::where($whereArray)->paginate($pageLimit);
         }
-        $attributeList->load('category');
-        $categoryArray = Category::all();
+        $attributeCollection->load('category');
+        $categoryCollection = Category::active()->get();
 
         /*
          * paging
          */
         if (isset($formData['Id'])) {
-            $attributeList->appends(['formData[Id]' => $formData['Id']]);
+            $attributeCollection->appends(['formData[Id]' => $formData['Id']]);
         }
         if (isset($formData['Status'])) {
-            $attributeList->appends(['formData[Status]' => $formData['Status']]);
+            $attributeCollection->appends(['formData[Status]' => $formData['Status']]);
         }
         if (isset($formData['CategoryId'])) {
-            $attributeList->appends(['formData[CategoryId]' => $formData['CategoryId']]);
+            $attributeCollection->appends(['formData[CategoryId]' => $formData['CategoryId']]);
         }
         if (isset($formData['sort'])) {
-            $attributeList->appends(['formData[sort]' => $formData['sort']]);
+            $attributeCollection->appends(['formData[sort]' => $formData['sort']]);
         }
         if (isset($formData['order'])) {
-            $attributeList->appends(['formData[order]' => $formData['order']]);
+            $attributeCollection->appends(['formData[order]' => $formData['order']]);
         }
 
         /*
@@ -71,10 +86,10 @@ class AttributeController extends Controller
         return view('attribute', [
             'title' => 'Attribute',
             'pageName' => 'Attribute List',
-            'attributeList' => $attributeList,
+            'attributeCollection' => $attributeCollection,
             'notData' => 'not data',
             'formData' => $formData,
-            'categoryArray' => $categoryArray,
+            'categoryCollection' => $categoryCollection,
             'statusArray' => $this->statusArray,
             'sortArray' => $this->sortArray,
             'orderArray' => $this->orderArray,
@@ -82,10 +97,63 @@ class AttributeController extends Controller
         ]);
     }
 
+    /**
+     * ajax attribute detail
+     *
+     * @param Request $request
+     * @param $id attribute id
+     */
     public function attributeDetail(Request $request, $id) {
-        $attributeInfo = Attribute::with('category')->find($id);
+        $attributeObject = Attribute::with('category')->findOrFail($id);
         echo view('modal.attribute', [
-            'attributeInfo' => $attributeInfo,
+            'attributeObject' => $attributeObject,
         ]);
     }
+
+    public function attributeEdit(Request $request, $id = 0) {
+        $categoryCollection = Category::active()->get();
+        if ($categoryCollection->isEmpty()) {
+            die('without active category');
+        }
+        $id = intval($id);
+        $action = $request->input('action', '');
+        if (empty($action)) {
+            $action = $request->input('act', '');
+        }
+        if (empty($id)) {
+            $action = '';
+        }
+        switch ($action) {
+            case 'edit':
+                $attributeObject = Attribute::with('category')->findOrFail($id);
+                return view('attributeDetail', [
+                    'contentTypeArray' => $this->contentTypeArray,
+                    'statusArray' => $this->statusArray,
+                    'title' => 'Attribute(Add | Edit)',
+                    'pageName' => 'Attribute(Add | Edit)',
+                    'requestPath' => url('/attribute/edit/' . $id),
+                    'action' => 'doedit',
+                    'categoryCollection' => $categoryCollection,
+                    'attributeObject' => $attributeObject,
+                ]);
+                break;
+            case 'doedit':
+                break;
+            case 'doadd':
+                break;
+            default:
+                return view('attributeDetail', [
+                    'contentTypeArray' => $this->contentTypeArray,
+                    'statusArray' => $this->statusArray,
+                    'title' => 'Attribute(Add | Edit)',
+                    'pageName' => 'Attribute(Add | Edit)',
+                    'requestPath' => url('/attribute/edit/'),
+                    'action' => 'doadd',
+                    'categoryCollection' => $categoryCollection,
+                ]);
+        }
+
+    }
+
+
 }

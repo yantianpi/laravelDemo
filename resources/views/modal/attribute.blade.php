@@ -3,54 +3,54 @@
         <span class="badge">
             Id
         </span>
-        {{ $attributeInfo->Id or ''}}
+        {{ $attributeObject->Id or '' }}
     </li>
     <li class="list-group-item">
         <span class="badge">
             Category
         </span>
-        {{ $attributeInfo->category->Alias or '' }}({{ $attributeInfo->category->Id or '' }})
+        {{ $attributeObject->category->Alias or '' }}({{ $attributeObject->category->Id or '' }})
     </li>
     <li class="list-group-item">
         <span class="badge">
             Name
         </span>
-        {{ $attributeInfo->Name or '' }}
+        {{ $attributeObject->Name or '' }}
     </li>
     <li class="list-group-item">
         <span class="badge">
             Alias
         </span>
-        {{ $attributeInfo->Alias or '' }}
+        {{ $attributeObject->Alias or '' }}
     </li>
     <li class="list-group-item">
         <span class="badge">
             ContentType
         </span>
-        {{ $attributeInfo->ContentType or '' }}
+        {{ $attributeObject->ContentType or '' }}
     </li>
     <li class="list-group-item">
         <span class="badge">
             DefaultMessage
         </span>
-        {{ $attributeInfo->DefaultMessage or '' }}
+        {{ $attributeObject->DefaultMessage or '' }}
     </li>
     <li class="list-group-item">
         <span class="badge">
             Status
         </span>
-        {{ $attributeInfo->Status or '' }}
+        {{ $attributeObject->Status or '' }}
     </li>
     <li class="list-group-item">
         <span class="badge">
             AddTime
         </span>
-        {{ $attributeInfo->AddTime or '' }}
+        {{ $attributeObject->AddTime or '' }}
     </li>
     <li class="list-group-item">
         <span class="badge">
             UpdateTime
         </span>
-        {{ $attributeInfo->UpdateTime or '' }}
+        {{ $attributeObject->UpdateTime or '' }}
     </li>
 </ul>

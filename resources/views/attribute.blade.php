@@ -26,7 +26,7 @@
                     Category
                     <select name="formData[CategoryId]" class="form-control">
                         <option value="">>>请选择</option>
-                        @foreach($categoryArray as $categoryInfo)
+                        @foreach($categoryCollection as $categoryInfo)
                             <option value="{{ $categoryInfo->Id }}" @if(isset($formData['CategoryId']) && $formData['CategoryId'] == $categoryInfo->Id) selected @endif>{{ $categoryInfo->Alias }}</option>
                         @endforeach
                     </select>
@@ -69,7 +69,7 @@
             </h3>
         </div>
         <div class="panel-body full-height">
-            {{ $attributeList->links() }}
+            {{ $attributeCollection->links() }}
             <div class="checkbox">
                 <label>
                     <input class="selall" type="checkbox" onclick="selectAllItems('selall', 'processtatuscheckbox');" />
@@ -92,7 +92,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse($attributeList as $attributeInfo)
+                    @forelse($attributeCollection as $attributeInfo)
                         <tr class="info @if($attributeInfo->Status != 'ACTIVE') warning @endif">
                             <td>
                                 <input class="processtatuscheckbox" id="a_{{ $attributeInfo->Id }}" type="checkbox" value="{{ $attributeInfo->Id }}" />
@@ -112,9 +112,15 @@
                                 t:{{ $attributeInfo->Timestamp or '' }}
                             </td>
                             <td>
-                                <button type="button" class="btn btn-info" data-toggle="modal" data-id="{{ $attributeInfo->Id }}" data-target="#oneModal">
+                                <a href="javascript:void(0);" type="button" class="btn btn-info" data-toggle="modal" data-id="{{ $attributeInfo->Id }}" data-target="#oneModal">
                                     详情
-                                </button>
+                                </a>
+                                <a type="button" target="_blank" class="btn btn-info" href="{{ url('/attribute/edit/' . $attributeInfo->Id) . '?action=edit' }}">
+                                    编辑
+                                </a>
+                                <a type="button" target="_blank" class="btn btn-info" href="{{ url('/attribute/edit') }}">
+                                    添加
+                                </a>
                             </td>
                         </tr>
                     @empty
@@ -131,7 +137,7 @@
                     Select All Items
                 </label>
             </div>
-            {{ $attributeList->links() }}
+            {{ $attributeCollection->links() }}
         </div>
     </div>
 @endsection

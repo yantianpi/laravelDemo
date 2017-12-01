@@ -2,7 +2,9 @@
 
 namespace Peteryan;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Peteryan\Scopes\CategoryScope;
 
 class Category extends Model
 {
@@ -26,6 +28,24 @@ class Category extends Model
      * @var bool
      */
     public $timestamps = false;
+
+    protected static function boot() {
+        parent::boot();
+        /*
+         * 应用全局作用域
+         */
+//        static::addGlobalScope(new CategoryScope());
+    }
+
+    /**
+     * 本地作用域
+     *
+     * @param Builder $query
+     * @return $this
+     */
+    public function scopeActive(Builder $query) {
+        return $query->where('Status', 'ACTIVE');
+    }
 
     /**
      * one many one:category many:attribute
