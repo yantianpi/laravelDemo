@@ -82,8 +82,8 @@ class AttributeController extends Controller
         ]);
     }
 
-    public function attributeModal(Request $request, $id) {
-        $attributeInfo = Attribute::findOrFail($id);
+    public function attributeDetail(Request $request, $id) {
+        $attributeInfo = Attribute::with('category')->find($id);
         echo view('modal.attribute', [
             'attributeInfo' => $attributeInfo,
         ]);

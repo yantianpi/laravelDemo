@@ -42,4 +42,9 @@ Route::any('/log', 'LogController@logList')->name('logpage');
 /*
  * detail
  */
-Route::any('/attribute/{id}', 'AttributeController@attributeModal')->where('id', '[0-9]+');
+Route::any('/attribute/{id}', 'AttributeController@attributeDetail')->where('id', '[0-9]+');
+
+
+/*
+ * add and update
+ */

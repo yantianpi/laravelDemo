@@ -28,6 +28,13 @@ class Attribute extends Model
     public $timestamps = false;
 
     /**
+     * 不可以被批量赋值的属性
+     *
+     * @var array
+     */
+    public $guarded = [];
+
+    /**
      * many one one:category many:attribute
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

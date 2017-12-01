@@ -97,19 +97,19 @@
                             <td>
                                 <input class="processtatuscheckbox" id="a_{{ $attributeInfo->Id }}" type="checkbox" value="{{ $attributeInfo->Id }}" />
                             </td>
-                            <td>{{ $attributeInfo->Id }}</td>
-                            <td>{{ $attributeInfo->category->Alias }}</td>
-                            <td>{{ $attributeInfo->Name }}</td>
-                            <td>{{ $attributeInfo->Alias }}</td>
-                            <td>{{ $attributeInfo->ContentType }}</td>
-                            <td>{{ $attributeInfo->DefaultMessage }}</td>
-                            <td>{{ $attributeInfo->Status }}</td>
+                            <td>{{ $attributeInfo->Id or '' }}</td>
+                            <td>{{ $attributeInfo->category->Alias or '' }}</td>
+                            <td>{{ $attributeInfo->Name or '' }}</td>
+                            <td>{{ $attributeInfo->Alias or '' }}</td>
+                            <td>{{ $attributeInfo->ContentType or '' }}</td>
+                            <td>{{ $attributeInfo->DefaultMessage or '' }}</td>
+                            <td>{{ $attributeInfo->Status or '' }}</td>
                             <td>
-                                a:{{ $attributeInfo->AddTime }}
+                                a:{{ $attributeInfo->AddTime or '' }}
                                 <hr style="width: 90%"/>
-                                u:{{ $attributeInfo->UpdateTime }}
+                                u:{{ $attributeInfo->UpdateTime or '' }}
                                 <hr style="width: 90%"/>
-                                t:{{ $attributeInfo->Timestamp }}
+                                t:{{ $attributeInfo->Timestamp or '' }}
                             </td>
                             <td>
                                 <button type="button" class="btn btn-info" data-toggle="modal" data-id="{{ $attributeInfo->Id }}" data-target="#oneModal">
