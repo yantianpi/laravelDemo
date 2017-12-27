@@ -24,13 +24,13 @@
         <div class="form-group">
             <label for="attributeName" class="col-xs-4 control-label">Name</label>
             <div class="col-xs-20">
-                <input type="text" class="form-control" id="attributeName" name="formData[attributeName]" value="{{ $attributeObject->Name or '' }}" />
+                <input type="text" class="form-control" id="attributeName" name="formData[attributeName]" value="@if(isset($attributeObject->Name)){{ old('formData.attributeName', $attributeObject->Name) }}@else{{ old('formData.attributeName', '') }}@endif" />
             </div>
         </div>
         <div class="form-group">
             <label for="attributeAlias" class="col-xs-4 control-label">Alias</label>
             <div class="col-xs-20">
-                <input type="text" class="form-control" id="attributeAlias" name="formData[attributeAlias]" value="{{ $attributeObject->Alias or '' }}" />
+                <input type="text" class="form-control" id="attributeAlias" name="formData[attributeAlias]" value="@if(isset($attributeObject->Alias)){{ old('formData.attributeAlias', $attributeObject->Alias) }}@else{{ old('formData.attributeAlias', '') }}@endif" />
             </div>
         </div>
         <div class="form-group">
@@ -48,7 +48,7 @@
         <div class="form-group">
             <label for="attributeDefaultMessage" class="col-xs-4 control-label">DefaultMessage</label>
             <div class="col-xs-20">
-                <input type="text" class="form-control" id="attributeDefaultMessage" name="formData[attributeDefaultMessage]" value="{{ $attributeObject->DefaultMessage or '' }}" />
+                <input type="text" class="form-control" id="attributeDefaultMessage" name="formData[attributeDefaultMessage]" value="@if(isset($attributeObject->DefaultMessage)){{ old('formData.attributeDefaultMessage', $attributeObject->DefaultMessage) }} @else {{ old('formData.attributeDefaultMessage', '') }}@endif" />
             </div>
         </div>
         <div class="form-group">
@@ -64,10 +64,15 @@
             </div>
         </div>
         <div class="form-group">
-            <div class="col-xs-offset-4 col-xs-20">
+            <div class="col-xs-offset-4 col-xs-4">
                 <button type="submit" class="btn btn-info">Submit</button>
             </div>
+            <div class="col-xs-offset-4 col-xs-12">
+                <button type="reset" class="btn btn-info">Reset</button>
+            </div>
         </div>
+        <input type="hidden" name="action" value="{{ $action }}" />
+        <input type="hidden" name="id" value="{{ $attributeObject->Id or '' }}" />
     </form>
 @endsection
 
