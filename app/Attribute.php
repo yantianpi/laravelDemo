@@ -2,6 +2,7 @@
 
 namespace Peteryan;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 class Attribute extends Model
@@ -33,6 +34,16 @@ class Attribute extends Model
      * @var array
      */
     public $guarded = [];
+
+    /**
+     * 本地作用域
+     *
+     * @param Builder $query
+     * @return $this
+     */
+    public function scopeActive(Builder $query) {
+        return $query->where('Status', 'ACTIVE');
+    }
 
     /**
      * many one one:category many:attribute
