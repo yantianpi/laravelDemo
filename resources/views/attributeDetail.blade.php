@@ -1,5 +1,7 @@
 @extends('layout.index')
-@section('custom-css', '')
+@section('custom-css')
+    <link href="/css/attributeDetail.css" type="text/css" rel="stylesheet" />
+@endsection
 @section('pageContentDetail')
     <form class="form-horizontal" method="post" action="{{ $requestPath or '' }}">
         {{ csrf_field() }}
@@ -22,7 +24,9 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="attributeName" class="col-xs-4 control-label">Name</label>
+            <label for="attributeName" class="col-xs-4 control-label">
+                Name<span class="red">*</span>
+            </label>
             <div class="col-xs-20">
                 <input type="text" class="form-control" id="attributeName" name="formData[attributeName]" value="@if(isset($attributeObject->Name)){{ old('formData.attributeName', $attributeObject->Name) }}@else{{ old('formData.attributeName', '') }}@endif" />
             </div>
