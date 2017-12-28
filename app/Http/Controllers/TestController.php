@@ -14,7 +14,7 @@ class TestController extends Controller
         ob_flush();//将ob缓存中的内容输出到程序缓存，清空ob缓存，不关闭ob缓存
 //        ob_end_flush(); //将ob缓存中的内容输出到程序缓存，清空ob缓存，关闭ob缓存
         echo 'bb'; //存入ob缓存
-//        file_put_contents('test.txt', ob_get_contents());
+        file_put_contents('test.txt', ob_get_contents());
         die;
         /* ob_flush 输出abchellobb test.txt bb */
         /* ob_end_flush 输出abchellobb test.txt abchellobb */

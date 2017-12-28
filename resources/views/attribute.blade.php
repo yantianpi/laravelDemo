@@ -112,7 +112,7 @@
                                 t:{{ $attributeInfo->Timestamp or '' }}
                             </td>
                             <td>
-                                <a href="javascript:void(0);" type="button" class="btn btn-info" data-toggle="modal" data-id="{{ $attributeInfo->Id }}" data-target="#oneModal">
+                                <a href="javascript:void(0);" type="button" class="btn btn-info" data-toggle="modal" data-id="{{ $attributeInfo->Id }}" data-target="#oneModal" data-backdrop="static">
                                     详情
                                 </a>
                                 <a type="button" target="_blank" class="btn btn-info" href="{{ url('/attribute/edit/' . $attributeInfo->Id) . '?action=edit' }}">

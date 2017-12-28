@@ -14,7 +14,7 @@
             <div class="col-xs-20">
                 <select class="form-control" id="attributeCategory" name="formData[attributeCategory]">
                     @foreach($categoryCollection as $categoryInfo)
-                        <option value="{{ $categoryInfo->Id }}" @if(isset($attributeObject->CategoryId) && $attributeObject->CategoryId == $categoryInfo->Id) selected @endif>
+                        <option value="{{ $categoryInfo->Id }}" @if(!empty(old('formData.attributeCategory'))) @if(old('formData.attributeCategory') == $categoryInfo->Id) selected @endif @elseif(isset($attributeObject->CategoryId)) @if($attributeObject->CategoryId == $categoryInfo->Id) selected @endif @endif>
                             {{ $categoryInfo->Alias }}
                         </option>
                     @endforeach
@@ -38,7 +38,7 @@
             <div class="col-xs-20">
                 <select class="form-control" id="attributeContentType" name="formData[attributeContentType]">
                     @foreach($contentTypeArray as $key => $value)
-                        <option value="{{ $key }}" @if(isset($attributeObject->ContentType) && $attributeObject->ContentType == $key) selected @endif>
+                        <option value="{{ $key }}" @if(!empty(old('formData.attributeContentType'))) @if(old('formData.attributeContentType') == $key) selected @endif @elseif(isset($attributeObject->ContentType)) @if($attributeObject->ContentType == $key) selected @endif @endif>
                             {{ $value }}
                         </option>
                     @endforeach
@@ -56,7 +56,7 @@
             <div class="col-xs-20">
                 <select class="form-control" id="attributeStatus" name="formData[attributeStatus]">
                     @foreach($statusArray as $key => $value)
-                        <option value="{{ $key }}" @if(isset($attributeObject->Status) && $attributeObject->Status == $key) selected @endif>
+                        <option value="{{ $key }}" @if(!empty(old('formData.attributeStatus'))) @if(old('formData.attributeStatus') == $key) selected @endif @elseif(isset($attributeObject->Status)) @if($attributeObject->Status == $key) selected @endif @endif>
                             {{ $value }}
                         </option>
                     @endforeach
@@ -71,7 +71,7 @@
                 <button type="reset" class="btn btn-info">Reset</button>
             </div>
         </div>
-        <input type="hidden" name="action" value="{{ $action }}" />
+        <input type="hidden" name="action" value="{{ $action or '' }}" />
         <input type="hidden" name="id" value="{{ $attributeObject->Id or '' }}" />
     </form>
 @endsection

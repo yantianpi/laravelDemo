@@ -20,8 +20,8 @@ class CreateLogListTable extends Migration
                 $table->enum('LogType', ['BASIC', 'EXECUTE', 'NOTIFY', 'OTHER'])->default('OTHER')->comment('日志类型');
                 $table->unsignedBigInteger('MapId')->default(0)->comment('映射');
                 $table->string('Program', 250)->default('')->comment('程序');
-                $table->text('Keyword')->comment('查询关键词');
-                $table->text('Content')->comment('内容详细');
+                $table->text('Keyword')->nullable()->comment('查询关键词');
+                $table->text('Content')->nullable()->comment('内容详细');
                 $table->enum('HasAlert', ['NO', 'YES'])->default('NO')->comment('是否产生通知');
                 $table->dateTime('AddTime')->comment('添加时间');
                 $table->dateTime('UpdateTime')->comment('更新时间');
