@@ -18,14 +18,14 @@ class CreateTaskListTable extends Migration
                 $table->engine = 'MyISAM';
                 $table->increments('Id')->comment('自增主键');
                 $table->string('Name', 250)->default('')->comment('项目名');
-                $table->text('Description')->comment('描述');
+                $table->text('Description')->nullable()->comment('描述');
                 $table->unsignedBigInteger('ProjectId')->default(0)->comment('项目');
                 $table->unsignedBigInteger('CategoryId')->default(0)->comment('分类');
-                $table->text('Content')->comment('内容');
+                $table->text('Content')->nullable()->comment('内容');
                 $table->string('CronTime', 100)->default('')->comment('cron时间串');
                 $table->integer('Batch')->default(0)->comment('cron批次，0代表单独cron处理；其他表示批处理对应batch_list里id');
                 $table->enum('NotifyType', ['MAIL', 'OTHER'])->default('OTHER')->comment('通知类型');
-                $table->text('NotifyContent')->comment('通知配置项');
+                $table->text('NotifyContent')->nullable()->comment('通知配置项');
                 $table->unsignedBigInteger('MonitorCount')->default(0)->comment('执行次数');
                 $table->unsignedBigInteger('AlertCount')->default(0)->comment('通知次数');
                 $table->unsignedBigInteger('SeriesAlertCount')->default(0)->comment('连续通知次数');

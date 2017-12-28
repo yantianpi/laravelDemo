@@ -21,7 +21,7 @@ class CreateAttributeListTable extends Migration
                 $table->string('Name', 191)->default('')->comment('属性名');
                 $table->string('Alias', 255)->default('')->comment('别名');
                 $table->enum('ContentType', ['INT', 'STRING', 'REGEX', 'FLOAT', 'OTHER'])->default('OTHER')->comment('属性类型');
-                $table->text('DefaultMessage')->comment('默认消息');
+                $table->text('DefaultMessage')->nullable()->comment('默认消息');
                 $table->enum('Status', ['ACTIVE', 'INACTIVE'])->default('ACTIVE')->comment('状态');
                 $table->dateTime('AddTime')->comment('添加时间');
                 $table->dateTime('UpdateTime')->comment('更新时间');
