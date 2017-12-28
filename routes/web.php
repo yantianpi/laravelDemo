@@ -43,9 +43,15 @@ Route::any('/log', 'LogController@logList')->name('logpage');
  * detail
  */
 Route::any('/attribute/{id}', 'AttributeController@attributeDetail')->where('id', '[0-9]+');
+Route::any('/category/{id}', 'CategoryController@categoryDetail')->where('id', '[0-9]+');
 
+/*
+ * relation
+ */
+Route::any('/category/attributelist/{id}', 'CategoryController@categoryAttributeList')->where('id', '[0-9]+');
 
 /*
  * add and update
  */
 Route::any('/attribute/edit/{id?}', 'AttributeController@attributeEdit')->where('id', '[0-9]+');
+Route::any('/category/edit/{id?}', 'CategoryController@categoryEdit')->where('id', '[0-9]+');

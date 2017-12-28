@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Peteryan\Attribute;
 use Peteryan\Category;
-use Peteryan\Http\Requests\AttributeValiateRequest;
+use Peteryan\Http\Requests\AttributeValidateRequest;
 
 class AttributeController extends Controller
 {
@@ -115,11 +115,11 @@ class AttributeController extends Controller
     /**
      * 处理属性的添加于编辑
      *
-     * @param AttributeValiateRequest $request 方法体执行前会进行一些数据校验，参考校验类AttributeValiateRequest
+     * @param AttributeValidateRequest $request 方法体执行前会进行一些数据校验，参考校验类AttributeValiateRequest
      * @param int $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function attributeEdit(AttributeValiateRequest $request, $id = 0) {
+    public function attributeEdit(AttributeValidateRequest $request, $id = 0) {
         $categoryCollection = Category::active()->get();
         if ($categoryCollection->isEmpty()) {
             die('without active category');
