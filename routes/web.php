@@ -55,9 +55,11 @@ Route::any('/category/attributelist/{id}', 'CategoryController@categoryAttribute
  */
 Route::any('/attribute/edit/{id?}', 'AttributeController@attributeEdit')->where('id', '[0-9]+');
 Route::any('/category/edit/{id?}', 'CategoryController@categoryEdit')->where('id', '[0-9]+');
+Route::any('/project/edit/{id?}', 'ProjectController@projectEdit')->where('id', '[0-9]+');
 
 /*
  * ajax validate
  */
 Route::any('/attribute/validate', 'AttributeController@validateName');
 Route::any('/category/validate', 'CategoryController@validateName');
+Route::any('/project/validate', 'ProjectController@validateName');
