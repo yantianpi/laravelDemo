@@ -50,6 +50,7 @@ class CategoryController extends Controller
         /*
          * paging
          */
+        $dataCollection->appends(['pageLimit' => $pageLimit]);
         if (isset($formData['Id'])) {
             $dataCollection->appends(['formData[Id]' => $formData['Id']]);
         }
@@ -75,6 +76,7 @@ class CategoryController extends Controller
             'statusArray' => $this->statusArray,
             'sortArray' => $this->sortArray,
             'orderArray' => $this->orderArray,
+            'pageLimit' => $pageLimit,
 
         ]);
     }

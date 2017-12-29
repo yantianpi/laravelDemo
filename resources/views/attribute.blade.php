@@ -58,6 +58,7 @@
                         @endforeach
                     </select>
                 </div>
+                <input type="hidden" name="pageLimit" value="{{ $pageLimit or 5 }}" />
                 <button type="submit" class="btn btn-info">Query</button>
             </form>
         </div>
@@ -69,6 +70,9 @@
             </h3>
         </div>
         <div class="panel-body full-height">
+            @if(!$attributeCollection->isEmpty())
+                <input type="number" class="pageInputLimit form-control" />
+            @endif
             {{ $attributeCollection->links() }}
             <div class="checkbox">
                 <label>

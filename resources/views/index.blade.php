@@ -23,8 +23,8 @@
             </div>
 
             <div class="links">
-                <a href="https://laravel.com/docs">Laravel Documentation</a>
-                <a href="https://github.com/yantianpi/laravelDemo">GitHub</a>
+                <a target="_blank" href="https://laravel.com/docs">Laravel Documentation</a>
+                <a target="_blank" href="https://github.com/yantianpi/laravelDemo">GitHub</a>
             </div>
         </div>
     </div>

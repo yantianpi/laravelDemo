@@ -66,6 +66,7 @@ class AttributeController extends Controller
         /*
          * paging
          */
+        $attributeCollection->appends(['pageLimit' => $pageLimit]);
         if (isset($formData['Id'])) {
             $attributeCollection->appends(['formData[Id]' => $formData['Id']]);
         }
@@ -95,6 +96,7 @@ class AttributeController extends Controller
             'statusArray' => $this->statusArray,
             'sortArray' => $this->sortArray,
             'orderArray' => $this->orderArray,
+            'pageLimit' => $pageLimit,
 
         ]);
     }

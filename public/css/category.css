@@ -5,3 +5,6 @@ td {
 hr {
      margin: auto;
  }
+.pageInputLimit {
+    width: 10rem;
+}
