@@ -140,7 +140,7 @@ class AttributeController extends Controller
                     'requestPath' => url('/attribute/edit/' . $id),
                     'action' => 'doedit',
                     'categoryCollection' => $categoryCollection,
-                    'attributeObject' => $attributeObject,
+                    'dataObject' => $attributeObject,
                 ]);
                 break;
             case 'doedit':
@@ -235,5 +235,25 @@ class AttributeController extends Controller
 
     }
 
-
+    public function validateName(Request $request) {
+        $id = $request->input('id', 0);
+        $name = $request->input('name', '');
+        $categoryId = $request->input('categoryId', 0);
+        if (!empty($name) && !empty($categoryId)) {
+            $tmpObject = Attribute::where(
+                [
+                    ['Id', '!=', $id],
+                    ['Name', $name],
+                    ['CategoryId', $categoryId]
+                ]
+            )->first();
+            if (!empty($tmpObject)) {
+                echo json_encode(['flag' => false, 'message' => '<div class="panel panel-default"><div class="panel-heading"><h3 class="panel-title">error</h3></div><div class="panel-body"><div class="alert alert-danger"><ul><li>name & category(duplicate)</li></ul></div></div></div>']);
+            } else {
+                echo json_encode(['flag' => true, 'message' => '']);
+            }
+        } else {
+            echo json_encode(['flag' => false, 'message' => 'name or category is empty']);
+        }
+    }
 }
