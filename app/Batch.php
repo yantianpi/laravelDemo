@@ -5,14 +5,15 @@ namespace Peteryan;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
-class Project extends Model
+class Batch extends Model
 {
-    /**
+    /*
+     *
      * 模型关联表
      *
      * @var string
      */
-    protected $table = 'project_list';
+    protected $table = 'batch_list';
 
     /**
      * 模型关联表主键
@@ -36,14 +37,5 @@ class Project extends Model
      */
     public function scopeActive(Builder $query) {
         return $query->where('Status', 'ACTIVE');
-    }
-
-    /**
-     * one many one:project many:task
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function taskList() {
-        return $this->hasMany('Peteryan\Task', 'ProjectId', 'Id');
     }
 }

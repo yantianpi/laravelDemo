@@ -158,9 +158,10 @@ class AttributeController extends Controller
                 if (isset($formData['attributeAlias']) && $formData['attributeAlias'] != null) {
                     $attributeObject->Alias = $formData['attributeAlias'];
                 }
-                if (isset($formData['attributeContentType']) && isset($this->contentTypeArray[$formData['attributeContentType']])) {
-                    $attributeObject->ContentType = $formData['attributeContentType'];
-                }
+                //
+//                if (isset($formData['attributeContentType']) && isset($this->contentTypeArray[$formData['attributeContentType']])) {
+//                    $attributeObject->ContentType = $formData['attributeContentType'];
+//                }
                 if (isset($formData['attributeDefaultMessage']) && $formData['attributeDefaultMessage'] != null) {
                     $attributeObject->DefaultMessage = $formData['attributeDefaultMessage'];
                 }

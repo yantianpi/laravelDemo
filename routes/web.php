@@ -44,6 +44,8 @@ Route::any('/log', 'LogController@logList')->name('logpage');
  */
 Route::any('/attribute/{id}', 'AttributeController@attributeDetail')->where('id', '[0-9]+');
 Route::any('/category/{id}', 'CategoryController@categoryDetail')->where('id', '[0-9]+');
+Route::any('/task/{id}', 'TaskController@taskDetail')->where('id', '[0-9]+');
+Route::any('/batch/{type}/{id}', 'BatchController@batchDetail')->where('id', '[0-9]+');
 
 /*
  * relation
@@ -56,10 +58,16 @@ Route::any('/category/attributelist/{id}', 'CategoryController@categoryAttribute
 Route::any('/attribute/edit/{id?}', 'AttributeController@attributeEdit')->where('id', '[0-9]+');
 Route::any('/category/edit/{id?}', 'CategoryController@categoryEdit')->where('id', '[0-9]+');
 Route::any('/project/edit/{id?}', 'ProjectController@projectEdit')->where('id', '[0-9]+');
+Route::any('/task/edit/{id?}', 'TaskController@taskEdit')->where('id', '[0-9]+');
 
 /*
- * ajax validate
+ * validate
  */
 Route::any('/attribute/validate', 'AttributeController@validateName');
 Route::any('/category/validate', 'CategoryController@validateName');
 Route::any('/project/validate', 'ProjectController@validateName');
+
+/*
+ * task
+ */
+Route::any('/task/{type}/{id?}', 'TaskController@taskFill')->where('id', '[0-9]+');
