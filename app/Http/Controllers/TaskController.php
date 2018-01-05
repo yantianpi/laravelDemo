@@ -214,7 +214,10 @@ class TaskController extends Controller
                 }
                 $dataObject->UpdateTime = date('Y-m-d H:i:s');
                 try {
+                    $oldObject = Task::findOrFail($id);
                     $dataObject->save();
+                    $tmpContent = $oldObject->toJson() . ' >>> ' . $dataObject->toJson();
+                    CommonController::logRecord('BASIC', $id, __FILE__, 'task update task update', $tmpContent);
                     return redirect("/task/edit/{$id}?action=edit");
                 } catch (\Exception $e) {
                     return back()->withErrors($e->getMessage())->withInput();
@@ -261,6 +264,9 @@ class TaskController extends Controller
                     $tmpArray['AddTime'] = $tmpTime;
                     $tmpArray['UpdateTime'] = $tmpTime;
                     $taskId = DB::table('task_list')->insertGetId($tmpArray);
+                    $tmpObject = Task::findOrFail($taskId);
+                    $tmpContent = $tmpObject->toJson();
+                    CommonController::logRecord('BASIC', $taskId, __FILE__, 'task add task add', $tmpContent);
                     return redirect("/task/edit/{$taskId}?action=edit");
                 } catch (\Exception $e) {
                     return back()->withErrors([$e->getMessage()])->withInput();

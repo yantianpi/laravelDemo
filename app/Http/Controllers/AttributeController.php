@@ -170,7 +170,10 @@ class AttributeController extends Controller
                 }
                 $attributeObject->UpdateTime = date('Y-m-d H:i:s');
                 try {
+                    $oldObject = Attribute::findOrFail($id);
                     $attributeObject->save();
+                    $tmpContent = $oldObject->toJson() . ' >>> ' . $attributeObject->toJson();
+                    CommonController::logRecord('BASIC', $id, __FILE__, 'attribute update attribute update', $tmpContent);
                     return redirect("/attribute/edit/{$id}?action=edit");
                 } catch (\Exception $e) {
                     return back()->withErrors($e->getMessage())->withInput();
@@ -217,6 +220,9 @@ class AttributeController extends Controller
                         $tmpArray['AddTime'] = $tmpTime;
                         $tmpArray['UpdateTime'] = $tmpTime;
                         $attributeId = DB::table('attribute_list')->insertGetId($tmpArray);
+                        $tmpObject = Attribute::findOrFail($attributeId);
+                        $tmpContent = $tmpObject->toJson();
+                        CommonController::logRecord('BASIC', $attributeId, __FILE__, 'attribute add attribute add', $tmpContent);
                         return redirect("/attribute/edit/{$attributeId}?action=edit");
                     } catch (\Exception $e) {
                         return back()->withErrors([$e->getMessage()])->withInput();

@@ -141,7 +141,10 @@ class BatchController extends Controller
                 }
                 $dataObject->UpdateTime = date('Y-m-d H:i:s');
                 try {
+                    $oldObject = Batch::findOrFail($id);
                     $dataObject->save();
+                    $tmpContent = $oldObject->toJson() . ' >>> ' . $dataObject->toJson();
+                    CommonController::logRecord('BASIC', $id, __FILE__, 'batch update batch update', $tmpContent);
                     return redirect("/batch/edit/{$id}?action=edit");
                 } catch (\Exception $e) {
                     return back()->withErrors($e->getMessage())->withInput();
@@ -181,6 +184,9 @@ class BatchController extends Controller
                         $tmpArray['AddTime'] = $tmpTime;
                         $tmpArray['UpdateTime'] = $tmpTime;
                         $batchId = DB::table('batch_list')->insertGetId($tmpArray);
+                        $tmpObject = Batch::findOrFail($batchId);
+                        $tmpContent = $tmpObject->toJson();
+                        CommonController::logRecord('BASIC', $batchId, __FILE__, 'batch add batch add', $tmpContent);
                         return redirect("/batch/edit/{$batchId}?action=edit");
                     } catch (\Exception $e) {
                         return back()->withErrors([$e->getMessage()])->withInput();

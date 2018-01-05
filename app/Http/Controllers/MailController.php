@@ -118,7 +118,10 @@ class MailController extends Controller
                 }
                 $dataObject->UpdateTime = date('Y-m-d H:i:s');
                 try {
+                    $oldObject = Mail::findOrFail($id);
                     $dataObject->save();
+                    $tmpContent = $oldObject->toJson() . ' >>> ' . $dataObject->toJson();
+                    CommonController::logRecord('BASIC', $id, __FILE__, 'mail update mail update', $tmpContent);
                     return redirect("/mail/edit/{$id}?action=edit");
                 } catch (\Exception $e) {
                     return back()->withErrors($e->getMessage())->withInput();
@@ -150,6 +153,9 @@ class MailController extends Controller
                         $tmpArray['AddTime'] = $tmpTime;
                         $tmpArray['UpdateTime'] = $tmpTime;
                         $mailId = DB::table('mail_list')->insertGetId($tmpArray);
+                        $tmpObject = Mail::findOrFail($mailId);
+                        $tmpContent = $tmpObject->toJson();
+                        CommonController::logRecord('BASIC', $mailId, __FILE__, 'mail add mail add', $tmpContent);
                         return redirect("/mail/edit/{$mailId}?action=edit");
                     } catch (\Exception $e) {
                         return back()->withErrors([$e->getMessage()])->withInput();

@@ -155,7 +155,10 @@ class CategoryController extends Controller
                 }
                 $categoryObject->UpdateTime = date('Y-m-d H:i:s');
                 try {
+                    $oldObject = Category::findOrFail($id);
                     $categoryObject->save();
+                    $tmpContent = $oldObject->toJson() . ' >>> ' . $categoryObject->toJson();
+                    CommonController::logRecord('BASIC', $id, __FILE__, 'category update category update', $tmpContent);
                     return redirect("/category/edit/{$id}?action=edit");
                 } catch (\Exception $e) {
                     return back()->withErrors($e->getMessage())->withInput();
@@ -191,6 +194,9 @@ class CategoryController extends Controller
                         $tmpArray['AddTime'] = $tmpTime;
                         $tmpArray['UpdateTime'] = $tmpTime;
                         $categoryId = DB::table('category_list')->insertGetId($tmpArray);
+                        $tmpObject = Category::findOrFail($categoryId);
+                        $tmpContent = $tmpObject->toJson();
+                        CommonController::logRecord('BASIC', $categoryId, __FILE__, 'category add category add', $tmpContent);
                         return redirect("/category/edit/{$categoryId}?action=edit");
                     } catch (\Exception $e) {
                         return back()->withErrors([$e->getMessage()])->withInput();

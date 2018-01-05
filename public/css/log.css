@@ -8,3 +8,6 @@ hr {
 .pageInputLimit {
     width: 10rem;
 }
+.list-group-item {
+    word-break: break-all;
+}
