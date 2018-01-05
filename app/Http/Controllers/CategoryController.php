@@ -132,7 +132,17 @@ class CategoryController extends Controller
                 $categoryObject = Category::findOrFail($id);
                 $formData = $request->input('formData', []);
                 if (isset($formData['categoryName']) && $formData['categoryName'] != null) {
-                    $categoryObject->Name = $formData['categoryName'];
+                    $tmpObject = Category::where(
+                        [
+                            ['Id', '!=', $id],
+                            ['Name', $formData['categoryName']]
+                        ]
+                    )->first();
+                    if (!empty($tmpObject)) {
+                        return back()->withErrors("分类名重复")->withInput();
+                    } else {
+                        $categoryObject->Name = $formData['categoryName'];
+                    }
                 }
                 if (isset($formData['categoryAlias']) && $formData['categoryAlias'] != null) {
                     $categoryObject->Alias = $formData['categoryAlias'];

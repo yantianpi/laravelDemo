@@ -59,6 +59,7 @@ Route::any('/attribute/edit/{id?}', 'AttributeController@attributeEdit')->where(
 Route::any('/category/edit/{id?}', 'CategoryController@categoryEdit')->where('id', '[0-9]+');
 Route::any('/project/edit/{id?}', 'ProjectController@projectEdit')->where('id', '[0-9]+');
 Route::any('/task/edit/{id?}', 'TaskController@taskEdit')->where('id', '[0-9]+');
+Route::any('/mail/edit/{id?}', 'MailController@mailEdit')->where('id', '[0-9]+');
 
 /*
  * validate
@@ -66,8 +67,9 @@ Route::any('/task/edit/{id?}', 'TaskController@taskEdit')->where('id', '[0-9]+')
 Route::any('/attribute/validate', 'AttributeController@validateName');
 Route::any('/category/validate', 'CategoryController@validateName');
 Route::any('/project/validate', 'ProjectController@validateName');
+Route::any('/mail/validate', 'MailController@validateMail');
 
 /*
- * task
+ * data fill
  */
 Route::any('/task/{type}/{id?}', 'TaskController@taskFill')->where('id', '[0-9]+');

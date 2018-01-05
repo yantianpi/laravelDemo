@@ -98,7 +98,17 @@ class ProjectController extends Controller
                 $dataObject = Project::findOrFail($id);
                 $formData = $request->input('formData', []);
                 if (isset($formData['projectName']) && $formData['projectName'] != null) {
-                    $dataObject->Name = $formData['projectName'];
+                    $tmpObject = Project::where(
+                        [
+                            ['Id', '!=', $id],
+                            ['Name', $formData['projectName']]
+                        ]
+                    )->first();
+                    if (!empty($tmpObject)) {
+                        return back()->withErrors("工程名重复")->withInput();
+                    } else {
+                        $dataObject->Name = $formData['projectName'];
+                    }
                 }
                 if (isset($formData['projectStatus']) && isset($this->statusArray[$formData['projectStatus']])) {
                     $dataObject->Status = $formData['projectStatus'];
