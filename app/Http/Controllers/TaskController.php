@@ -45,22 +45,22 @@ class TaskController extends Controller
         $pageLimit = $request->input('pageLimit', 5);
         $whereArray = [];
         if (isset($formData['Id']) && !empty($formData['Id'])) {
-            $whereArray[] = ['Id', addslashes($formData['Id'])];
+            $whereArray[] = ['Id', $formData['Id']];
         }
         if (isset($formData['ProjectId']) && !empty($formData['ProjectId'])) {
-            $whereArray[] = ['ProjectId', addslashes($formData['ProjectId'])];
+            $whereArray[] = ['ProjectId', $formData['ProjectId']];
         }
         if (isset($formData['CategoryId']) && !empty($formData['CategoryId'])) {
-            $whereArray[] = ['CategoryId', addslashes($formData['CategoryId'])];
+            $whereArray[] = ['CategoryId', $formData['CategoryId']];
         }
         if (isset($formData['CurrentStatus']) && isset($this->currentStatusArray[$formData['CurrentStatus']])) {
-            $whereArray[] = ['CurrentStatus', addslashes($formData['CurrentStatus'])];
+            $whereArray[] = ['CurrentStatus', $formData['CurrentStatus']];
         }
         if (isset($formData['NotifyType']) && isset($this->notifyTypeArray[$formData['NotifyType']])) {
-            $whereArray[] = ['NotifyType', addslashes($formData['NotifyType'])];
+            $whereArray[] = ['NotifyType', $formData['NotifyType']];
         }
         if (isset($formData['Status']) && isset($this->statusArray[$formData['Status']])) {
-            $whereArray[] = ['Status', addslashes($formData['Status'])];
+            $whereArray[] = ['Status', $formData['Status']];
         }
         $tmpSort = isset($formData['sort']) ? $formData['sort'] : 'Id';
         $tmpOrder = isset($formData['order']) ? $formData['order'] : 'ASC';

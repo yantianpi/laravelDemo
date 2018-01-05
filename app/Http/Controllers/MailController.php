@@ -29,10 +29,10 @@ class MailController extends Controller
         $pageLimit = $request->input('pageLimit', 5);
         $whereArray = [];
         if (isset($formData['Status']) && !empty($formData['Status'])) {
-            $whereArray[] = ['Status', addslashes($formData['Status'])];
+            $whereArray[] = ['Status', $formData['Status']];
         }
         if (isset($formData['Id']) && !empty($formData['Id'])) {
-            $whereArray[] = ['Id', addslashes($formData['Id'])];
+            $whereArray[] = ['Id', $formData['Id']];
         }
         $tmpSort = isset($formData['sort']) ? $formData['sort'] : 'Id';
         $tmpOrder = isset($formData['order']) ? $formData['order'] : 'ASC';

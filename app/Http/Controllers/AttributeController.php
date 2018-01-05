@@ -45,13 +45,13 @@ class AttributeController extends Controller
         $pageLimit = $request->input('pageLimit', 5);
         $whereArray = [];
         if (isset($formData['Status']) && !empty($formData['Status'])) {
-            $whereArray[] = ['Status', addslashes($formData['Status'])];
+            $whereArray[] = ['Status', $formData['Status']];
         }
         if (isset($formData['Id']) && !empty($formData['Id'])) {
-            $whereArray[] = ['Id', addslashes($formData['Id'])];
+            $whereArray[] = ['Id', $formData['Id']];
         }
         if (isset($formData['CategoryId']) && !empty($formData['CategoryId'])) {
-            $whereArray[] = ['CategoryId', addslashes($formData['CategoryId'])];
+            $whereArray[] = ['CategoryId', $formData['CategoryId']];
         }
         $tmpSort = isset($formData['sort']) ? $formData['sort'] : 'Id';
         $tmpOrder = isset($formData['order']) ? $formData['order'] : 'ASC';

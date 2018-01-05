@@ -46,6 +46,7 @@ Route::any('/log', 'LogController@logList')->name('logpage');
 Route::any('/attribute/{id}', 'AttributeController@attributeDetail')->where('id', '[0-9]+');
 Route::any('/category/{id}', 'CategoryController@categoryDetail')->where('id', '[0-9]+');
 Route::any('/task/{id}', 'TaskController@taskDetail')->where('id', '[0-9]+');
+Route::any('/log/{id}', 'LogController@logDetail')->where('id', '[0-9]+');
 
 /*
  * relation
