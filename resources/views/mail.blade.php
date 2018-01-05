@@ -1,9 +1,9 @@
 @extends('layout.index')
 @section('custom-css')
-    <link href="/css/category.css" type="text/css" rel="stylesheet" />
+    <link href="/css/mail.css" type="text/css" rel="stylesheet" />
 @endsection
 @section('custom-js')
-    <script src="/js/category.js"></script>
+    <script src="/js/mail.js"></script>
 @endsection
 @section('pageContent')
     <div class="panel panel-default">
@@ -13,7 +13,7 @@
             </h3>
         </div>
         <div class="panel-body">
-            <form method="post" action="{{route('categorypage')}}" class="form-inline">
+            <form method="post" action="{{route('mailpage')}}" class="form-inline">
                 {{ csrf_field() }}
                 <div class="form-group">
                     <label>
@@ -77,8 +77,7 @@
                         <td></td>
                         <td>Id</td>
                         <td>Name</td>
-                        <td>Alias</td>
-                        <td>Script</td>
+                        <td>Mail</td>
                         <td>Status</td>
                         <td>Time</td>
                         <td>Operate</td>
@@ -92,8 +91,7 @@
                             </td>
                             <td>{{ $dataInfo->Id or '' }}</td>
                             <td>{{ $dataInfo->Name or '' }}</td>
-                            <td>{{ $dataInfo->Alias or '' }}</td>
-                            <td>{{ $dataInfo->Script or '' }}</td>
+                            <td>{{ $dataInfo->Mail or '' }}</td>
                             <td>{{ $dataInfo->Status or '' }}</td>
                             <td>
                                 a:{{ $dataInfo->AddTime or '' }}
@@ -103,16 +101,10 @@
                                 t:{{ $dataInfo->Timestamp or '' }}
                             </td>
                             <td>
-                                <a href="javascript:void(0);" type="button" class="btn btn-info categoryDetail" data-id="{{ $dataInfo->Id }}">
-                                    详情
-                                </a>
-                                <a href="javascript:void(0);" type="button" class="btn btn-info categoryAttributeList" data-alias="{{ $dataInfo->Alias or '' }}" data-id="{{ $dataInfo->Id }}">
-                                    属性
-                                </a>
-                                <a type="button" target="_blank" class="btn btn-info" href="{{ url('/category/edit/' . $dataInfo->Id) . '?action=edit' }}">
+                                <a type="button" target="_blank" class="btn btn-info" href="{{ url('/mail/edit/' . $dataInfo->Id) . '?action=edit' }}">
                                     编辑
                                 </a>
-                                <a type="button" target="_blank" class="btn btn-info" href="{{ url('/category/edit') }}">
+                                <a type="button" target="_blank" class="btn btn-info" href="{{ url('/mail/edit') }}">
                                     添加
                                 </a>
                             </td>

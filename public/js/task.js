@@ -1,5 +1,5 @@
 /**
- * Created by peteryan on 2017/11/30.
+ * Created by peteryan on 2018/1/2.
  */
 $(function () {
     $('#oneModal').on('show.bs.modal', function (event) {
@@ -7,19 +7,21 @@ $(function () {
         var id = element.data('id'); // Extract info from data-* attributes
         var modal = $(this);
         $.ajax({
-            url: '/attribute/' + id,
+            url: '/task/' + id,
             type: 'get',
-            data: [],
+            data: {},
             async: false,
             dataType: 'html',
             success: function (data) {
-                modal.find('.modal-title').text('Attribute Detail');
+                modal.find('.modal-title').text('Task Detail');
                 modal.find('.modal-body').html(data);
                 modal.find('.modal-footer').html('<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>');
-                console.log(data);
+                // console.log(data);
             },
             error: function (data) {
-                console.log('error');
+                modal.find('.modal-title').text('error');
+                modal.find('.modal-body').html(data.statusText);
+                modal.find('.modal-footer').html('<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>');
                 console.log(data);
             }
         });

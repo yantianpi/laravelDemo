@@ -3,8 +3,16 @@ td {
     vertical-align: middle !important;
 }
 hr {
-     margin: auto;
- }
+    margin: auto;
+}
 .pageInputLimit {
     width: 10rem;
+}
+
+.tdTime {
+    min-width: 20rem;
+}
+
+.list-group-item {
+    word-wrap: break-word;
 }

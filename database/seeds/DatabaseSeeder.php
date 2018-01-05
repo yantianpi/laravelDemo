@@ -18,5 +18,6 @@ class DatabaseSeeder extends Seeder
         $this->call(BatchSeeder::class);
         $this->call(MailSeeder::class);
         $this->call(LogSeeder::class);
+        $this->call(TaskSeeder::class);
     }
 }

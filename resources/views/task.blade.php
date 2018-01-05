@@ -1,9 +1,9 @@
 @extends('layout.index')
 @section('custom-css')
-    <link href="/css/attribute.css" type="text/css" rel="stylesheet" />
+    <link href="/css/task.css" type="text/css" rel="stylesheet" />
 @endsection
 @section('custom-js')
-    <script src="/js/attribute.js"></script>
+    <script src="/js/task.js"></script>
 @endsection
 @section('pageContent')
     <div class="panel panel-default">
@@ -13,7 +13,7 @@
             </h3>
         </div>
         <div class="panel-body">
-            <form method="post" action="{{route('attributepage')}}" class="form-inline">
+            <form method="post" action="{{route('taskpage')}}" class="form-inline">
                 {{ csrf_field() }}
                 <div class="form-group">
                     <label>
@@ -28,6 +28,33 @@
                         <option value="">>>请选择</option>
                         @foreach($categoryCollection as $categoryInfo)
                             <option value="{{ $categoryInfo->Id }}" @if(isset($formData['CategoryId']) && $formData['CategoryId'] == $categoryInfo->Id) selected @endif>{{ $categoryInfo->Alias }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group">
+                    Project
+                    <select name="formData[ProjectId]" class="form-control">
+                        <option value="">>>请选择</option>
+                        @foreach($projectCollection as $projectInfo)
+                            <option value="{{ $projectInfo->Id }}" @if(isset($formData['ProjectId']) && $formData['ProjectId'] == $projectInfo->Id) selected @endif>{{ $projectInfo->Name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group">
+                    NotifyType
+                    <select name="formData[NotifyType]" class="form-control">
+                        <option value="">>>请选择</option>
+                        @foreach($notifyTypeArray as $key => $value)
+                            <option value="{{ $key }}" @if(isset($formData['NotifyType']) && $formData['NotifyType'] == $key) selected @endif>{{ $value }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group">
+                    CurrentStatus
+                    <select name="formData[CurrentStatus]" class="form-control">
+                        <option value="">>>请选择</option>
+                        @foreach($currentStatusArray as $key => $value)
+                            <option value="{{ $key }}" @if(isset($formData['CurrentStatus']) && $formData['CurrentStatus'] == $key) selected @endif>{{ $value }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -70,10 +97,10 @@
             </h3>
         </div>
         <div class="panel-body full-height">
-            @if(!$attributeCollection->isEmpty())
+            @if(!$dataCollection->isEmpty())
                 <input type="number" class="pageInputLimit form-control" />
             @endif
-            {{ $attributeCollection->links() }}
+            {{ $dataCollection->links() }}
             <div class="checkbox">
                 <label>
                     <input class="selall" type="checkbox" onclick="selectAllItems('selall', 'processtatuscheckbox');" />
@@ -85,44 +112,66 @@
                     <tr>
                         <td></td>
                         <td>Id</td>
-                        <td>Category</td>
                         <td>Name</td>
-                        <td>Alias</td>
-                        <td>ContentType</td>
-                        <td>DefaultMessage</td>
+                        <td>Description</td>
+                        <td>Project</td>
+                        <td>Category</td>
+                        <td>CronTime</td>
+                        <td>Batch</td>
+                        <td>NotifyType</td>
+                        <td>Statistic</td>
+                        <td>CurrentStatus</td>
                         <td>Status</td>
                         <td>Time</td>
                         <td>Operate</td>
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse($attributeCollection as $attributeInfo)
-                        <tr class="info @if($attributeInfo->Status != 'ACTIVE') warning @endif">
+                    @forelse($dataCollection as $dataItem)
+                        <tr class="info @if($dataItem->Status != 'ACTIVE') warning @endif">
                             <td>
-                                <input class="processtatuscheckbox" id="a_{{ $attributeInfo->Id }}" type="checkbox" value="{{ $attributeInfo->Id }}" />
+                                <input class="processtatuscheckbox" id="a_{{ $dataItem->Id }}" type="checkbox" value="{{ $dataItem->Id }}" />
                             </td>
-                            <td>{{ $attributeInfo->Id or '' }}</td>
-                            <td>{{ $attributeInfo->category->Alias or '' }}</td>
-                            <td>{{ $attributeInfo->Name or '' }}</td>
-                            <td>{{ $attributeInfo->Alias or '' }}</td>
-                            <td>{{ $attributeInfo->ContentType or '' }}</td>
-                            <td>{{ $attributeInfo->DefaultMessage or '' }}</td>
-                            <td>{{ $attributeInfo->Status or '' }}</td>
+                            <td>{{ $dataItem->Id or '' }}</td>
+                            <td>{{ $dataItem->Name or '' }}</td>
+                            <td>{{ $dataItem->Description }}</td>
+                            <td>{{ $dataItem->project->Name or '' }}</td>
+                            <td>{{ $dataItem->category->Alias or '' }}</td>
+                            <td>{{ $dataItem->CronTime or '' }}</td>
                             <td>
-                                a:{{ $attributeInfo->AddTime or '' }}
+                                @if($dataItem->Batch == 0)
+                                    exclusive
+                                @else
+                                    share
+                                @endif
+
+                            </td>
+                            <td>{{ $dataItem->NotifyType or '' }}</td>
+                            <td>
+                                run:{{ $dataItem->MonitorCount }}<br />
+                                alert:{{ $dataItem->AlertCount }}
                                 <hr style="width: 90%"/>
-                                u:{{ $attributeInfo->UpdateTime or '' }}
+                                seriesAlert:{{ $dataItem->SeriesAlertCount }}<br />
+                                alertLimit:{{ $dataItem->AlertLimit }}
+                            </td>
+                            <td>{{ $dataItem->CurrentStatus or '' }}</td>
+                            <td>{{ $dataItem->Status or '' }}</td>
+                            <td class="tdTime">
+                                s:{{ $dataItem->StartTime or '' }}<br />
+                                e:{{ $dataItem->EndTime or '' }}
                                 <hr style="width: 90%"/>
-                                t:{{ $attributeInfo->Timestamp or '' }}
+                                a:{{ $dataItem->AddTime or '' }}<br />
+                                u:{{ $dataItem->UpdateTime or '' }}<br />
+                                t:{{ $dataItem->Timestamp or '' }}
                             </td>
                             <td>
-                                <a href="javascript:void(0);" type="button" class="btn btn-info" data-toggle="modal" data-id="{{ $attributeInfo->Id }}" data-target="#oneModal" data-backdrop="static">
+                                <a href="javascript:void(0);" type="button" class="btn btn-info" data-toggle="modal" data-id="{{ $dataItem->Id }}" data-target="#oneModal" data-backdrop="static">
                                     详情
                                 </a>
-                                <a type="button" target="_blank" class="btn btn-info" href="{{ url('/attribute/edit/' . $attributeInfo->Id) . '?action=edit' }}">
+                                <a type="button" target="_blank" class="btn btn-info" href="{{ url('/task/edit/' . $dataItem->Id) . '?action=edit' }}">
                                     编辑
                                 </a>
-                                <a type="button" target="_blank" class="btn btn-info" href="{{ url('/attribute/edit') }}">
+                                <a type="button" target="_blank" class="btn btn-info" href="{{ url('/task/edit') }}">
                                     添加
                                 </a>
                             </td>
@@ -141,7 +190,7 @@
                     Select All Items
                 </label>
             </div>
-            {{ $attributeCollection->links() }}
+            {{ $dataCollection->links() }}
         </div>
     </div>
 @endsection

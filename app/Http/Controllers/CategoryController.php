@@ -35,10 +35,10 @@ class CategoryController extends Controller
         $pageLimit = $request->input('pageLimit', 5);
         $whereArray = [];
         if (isset($formData['Status']) && !empty($formData['Status'])) {
-            $whereArray[] = ['Status', addslashes($formData['Status'])];
+            $whereArray[] = ['Status', $formData['Status']];
         }
         if (isset($formData['Id']) && !empty($formData['Id'])) {
-            $whereArray[] = ['Id', addslashes($formData['Id'])];
+            $whereArray[] = ['Id', $formData['Id']];
         }
         $tmpSort = isset($formData['sort']) ? $formData['sort'] : 'Id';
         $tmpOrder = isset($formData['order']) ? $formData['order'] : 'ASC';
@@ -50,6 +50,7 @@ class CategoryController extends Controller
         /*
          * paging
          */
+        $dataCollection->appends(['pageLimit' => $pageLimit]);
         if (isset($formData['Id'])) {
             $dataCollection->appends(['formData[Id]' => $formData['Id']]);
         }
@@ -75,6 +76,7 @@ class CategoryController extends Controller
             'statusArray' => $this->statusArray,
             'sortArray' => $this->sortArray,
             'orderArray' => $this->orderArray,
+            'pageLimit' => $pageLimit,
 
         ]);
     }
@@ -130,7 +132,17 @@ class CategoryController extends Controller
                 $categoryObject = Category::findOrFail($id);
                 $formData = $request->input('formData', []);
                 if (isset($formData['categoryName']) && $formData['categoryName'] != null) {
-                    $categoryObject->Name = $formData['categoryName'];
+                    $tmpObject = Category::where(
+                        [
+                            ['Id', '!=', $id],
+                            ['Name', $formData['categoryName']]
+                        ]
+                    )->first();
+                    if (!empty($tmpObject)) {
+                        return back()->withErrors("分类名重复")->withInput();
+                    } else {
+                        $categoryObject->Name = $formData['categoryName'];
+                    }
                 }
                 if (isset($formData['categoryAlias']) && $formData['categoryAlias'] != null) {
                     $categoryObject->Alias = $formData['categoryAlias'];
@@ -143,7 +155,10 @@ class CategoryController extends Controller
                 }
                 $categoryObject->UpdateTime = date('Y-m-d H:i:s');
                 try {
+                    $oldObject = Category::findOrFail($id);
                     $categoryObject->save();
+                    $tmpContent = $oldObject->toJson() . ' >>> ' . $categoryObject->toJson();
+                    CommonController::logRecord('BASIC', $id, __FILE__, 'category update category update', $tmpContent);
                     return redirect("/category/edit/{$id}?action=edit");
                 } catch (\Exception $e) {
                     return back()->withErrors($e->getMessage())->withInput();
@@ -179,6 +194,9 @@ class CategoryController extends Controller
                         $tmpArray['AddTime'] = $tmpTime;
                         $tmpArray['UpdateTime'] = $tmpTime;
                         $categoryId = DB::table('category_list')->insertGetId($tmpArray);
+                        $tmpObject = Category::findOrFail($categoryId);
+                        $tmpContent = $tmpObject->toJson();
+                        CommonController::logRecord('BASIC', $categoryId, __FILE__, 'category add category add', $tmpContent);
                         return redirect("/category/edit/{$categoryId}?action=edit");
                     } catch (\Exception $e) {
                         return back()->withErrors([$e->getMessage()])->withInput();
@@ -196,5 +214,25 @@ class CategoryController extends Controller
                 ]);
         }
 
+    }
+
+    public function validateName(Request $request) {
+        $id = $request->input('id', 0);
+        $name = $request->input('name', '');
+        if (!empty($name)) {
+            $tmpObject = Category::where(
+                [
+                    ['Id', '!=', $id],
+                    ['Name', $name]
+                ]
+            )->first();
+            if (!empty($tmpObject)) {
+                echo json_encode(['flag' => false, 'message' => '<div class="panel panel-default"><div class="panel-heading"><h3 class="panel-title">error</h3></div><div class="panel-body"><div class="alert alert-danger"><ul><li>duplicate name</li></ul></div></div></div>']);
+            } else {
+                echo json_encode(['flag' => true, 'message' => '']);
+            }
+        } else {
+            echo json_encode(['flag' => false, 'message' => 'name is empty']);
+        }
     }
 }

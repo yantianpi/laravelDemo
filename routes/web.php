@@ -37,6 +37,7 @@ Route::any('/attribute', 'AttributeController@attributeList')->name('attributepa
 Route::any('/project', 'ProjectController@projectList')->name('projectpage');
 Route::any('/task', 'TaskController@taskList')->name('taskpage');
 Route::any('/mail', 'MailController@mailList')->name('mailpage');
+Route::any('/batch', 'BatchController@batchList')->name('batchpage');
 Route::any('/log', 'LogController@logList')->name('logpage');
 
 /*
@@ -44,6 +45,8 @@ Route::any('/log', 'LogController@logList')->name('logpage');
  */
 Route::any('/attribute/{id}', 'AttributeController@attributeDetail')->where('id', '[0-9]+');
 Route::any('/category/{id}', 'CategoryController@categoryDetail')->where('id', '[0-9]+');
+Route::any('/task/{id}', 'TaskController@taskDetail')->where('id', '[0-9]+');
+Route::any('/log/{id}', 'LogController@logDetail')->where('id', '[0-9]+');
 
 /*
  * relation
@@ -55,3 +58,23 @@ Route::any('/category/attributelist/{id}', 'CategoryController@categoryAttribute
  */
 Route::any('/attribute/edit/{id?}', 'AttributeController@attributeEdit')->where('id', '[0-9]+');
 Route::any('/category/edit/{id?}', 'CategoryController@categoryEdit')->where('id', '[0-9]+');
+Route::any('/project/edit/{id?}', 'ProjectController@projectEdit')->where('id', '[0-9]+');
+Route::any('/task/edit/{id?}', 'TaskController@taskEdit')->where('id', '[0-9]+');
+Route::any('/mail/edit/{id?}', 'MailController@mailEdit')->where('id', '[0-9]+');
+Route::any('/batch/edit/{id?}', 'BatchController@batchEdit')->where('id', '[0-9]+');
+
+/*
+ * validate
+ */
+Route::any('/attribute/validate', 'AttributeController@validateName');
+Route::any('/category/validate', 'CategoryController@validateName');
+Route::any('/project/validate', 'ProjectController@validateName');
+Route::any('/mail/validate', 'MailController@validateMail');
+Route::any('/batch/validate', 'batchController@validateName');
+
+/*
+ * data fill
+ */
+Route::any('/task/{type}/{id?}', 'TaskController@taskFill')->where('id', '[0-9]+');
+Route::any('/batch/{type}/{id}', 'BatchController@batchDetail')->where('id', '[0-9]+');
+

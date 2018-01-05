@@ -2,6 +2,9 @@
 @section('custom-css')
     <link href="/css/categoryDetail.css" type="text/css" rel="stylesheet" />
 @endsection
+@section('custom-js')
+    <script src="/js/categoryDetail.js"></script>
+@endsection
 @section('pageContentDetail')
     <form class="form-horizontal" method="post" action="{{ $requestPath or '' }}">
         {{ csrf_field() }}
@@ -15,8 +18,9 @@
             <label for="categoryName" class="col-xs-4 control-label">
                 Name<span class="red">*</span>
             </label>
-            <div class="col-xs-20">
-                <input type="text" class="form-control" id="categoryName" name="formData[categoryName]" value="@if(isset($dataObject->Name)){{ old('formData.categoryName', $dataObject->Name) }}@else{{ old('formData.categoryName', '') }}@endif" />
+            <div class="col-xs-20 has-feedback">
+                <input type="text" class="form-control" id="categoryName" name="formData[categoryName]" value="@if(isset($dataObject->Name)){{ old('formData.categoryName', $dataObject->Name) }}@else{{ old('formData.categoryName', '') }}@endif" data-id="{{ $dataObject->Id or '' }}" />
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
             </div>
         </div>
         <div class="form-group">

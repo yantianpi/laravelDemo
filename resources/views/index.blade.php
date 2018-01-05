@@ -3,6 +3,7 @@
     <link href="/css/index.css" rel="stylesheet" type="text/css" />
 @endsection
 @section('oneModal', '')
+@section('pageError', '')
 @section('pageContentDetail')
     <div class="flex-center position-ref full-height">
         @if (Route::has('login'))
@@ -22,8 +23,8 @@
             </div>
 
             <div class="links">
-                <a href="https://laravel.com/docs">Laravel Documentation</a>
-                <a href="https://github.com/yantianpi/laravelDemo">GitHub</a>
+                <a target="_blank" href="https://laravel.com/docs">Laravel Documentation</a>
+                <a target="_blank" href="https://github.com/yantianpi/laravelDemo">GitHub</a>
             </div>
         </div>
     </div>

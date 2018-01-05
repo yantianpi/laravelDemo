@@ -45,13 +45,13 @@ class AttributeController extends Controller
         $pageLimit = $request->input('pageLimit', 5);
         $whereArray = [];
         if (isset($formData['Status']) && !empty($formData['Status'])) {
-            $whereArray[] = ['Status', addslashes($formData['Status'])];
+            $whereArray[] = ['Status', $formData['Status']];
         }
         if (isset($formData['Id']) && !empty($formData['Id'])) {
-            $whereArray[] = ['Id', addslashes($formData['Id'])];
+            $whereArray[] = ['Id', $formData['Id']];
         }
         if (isset($formData['CategoryId']) && !empty($formData['CategoryId'])) {
-            $whereArray[] = ['CategoryId', addslashes($formData['CategoryId'])];
+            $whereArray[] = ['CategoryId', $formData['CategoryId']];
         }
         $tmpSort = isset($formData['sort']) ? $formData['sort'] : 'Id';
         $tmpOrder = isset($formData['order']) ? $formData['order'] : 'ASC';
@@ -66,6 +66,7 @@ class AttributeController extends Controller
         /*
          * paging
          */
+        $attributeCollection->appends(['pageLimit' => $pageLimit]);
         if (isset($formData['Id'])) {
             $attributeCollection->appends(['formData[Id]' => $formData['Id']]);
         }
@@ -95,6 +96,7 @@ class AttributeController extends Controller
             'statusArray' => $this->statusArray,
             'sortArray' => $this->sortArray,
             'orderArray' => $this->orderArray,
+            'pageLimit' => $pageLimit,
 
         ]);
     }
@@ -140,7 +142,7 @@ class AttributeController extends Controller
                     'requestPath' => url('/attribute/edit/' . $id),
                     'action' => 'doedit',
                     'categoryCollection' => $categoryCollection,
-                    'attributeObject' => $attributeObject,
+                    'dataObject' => $attributeObject,
                 ]);
                 break;
             case 'doedit':
@@ -156,9 +158,10 @@ class AttributeController extends Controller
                 if (isset($formData['attributeAlias']) && $formData['attributeAlias'] != null) {
                     $attributeObject->Alias = $formData['attributeAlias'];
                 }
-                if (isset($formData['attributeContentType']) && isset($this->contentTypeArray[$formData['attributeContentType']])) {
-                    $attributeObject->ContentType = $formData['attributeContentType'];
-                }
+                //
+//                if (isset($formData['attributeContentType']) && isset($this->contentTypeArray[$formData['attributeContentType']])) {
+//                    $attributeObject->ContentType = $formData['attributeContentType'];
+//                }
                 if (isset($formData['attributeDefaultMessage']) && $formData['attributeDefaultMessage'] != null) {
                     $attributeObject->DefaultMessage = $formData['attributeDefaultMessage'];
                 }
@@ -167,7 +170,10 @@ class AttributeController extends Controller
                 }
                 $attributeObject->UpdateTime = date('Y-m-d H:i:s');
                 try {
+                    $oldObject = Attribute::findOrFail($id);
                     $attributeObject->save();
+                    $tmpContent = $oldObject->toJson() . ' >>> ' . $attributeObject->toJson();
+                    CommonController::logRecord('BASIC', $id, __FILE__, 'attribute update attribute update', $tmpContent);
                     return redirect("/attribute/edit/{$id}?action=edit");
                 } catch (\Exception $e) {
                     return back()->withErrors($e->getMessage())->withInput();
@@ -214,6 +220,9 @@ class AttributeController extends Controller
                         $tmpArray['AddTime'] = $tmpTime;
                         $tmpArray['UpdateTime'] = $tmpTime;
                         $attributeId = DB::table('attribute_list')->insertGetId($tmpArray);
+                        $tmpObject = Attribute::findOrFail($attributeId);
+                        $tmpContent = $tmpObject->toJson();
+                        CommonController::logRecord('BASIC', $attributeId, __FILE__, 'attribute add attribute add', $tmpContent);
                         return redirect("/attribute/edit/{$attributeId}?action=edit");
                     } catch (\Exception $e) {
                         return back()->withErrors([$e->getMessage()])->withInput();
@@ -235,5 +244,25 @@ class AttributeController extends Controller
 
     }
 
-
+    public function validateName(Request $request) {
+        $id = $request->input('id', 0);
+        $name = $request->input('name', '');
+        $categoryId = $request->input('categoryId', 0);
+        if (!empty($name) && !empty($categoryId)) {
+            $tmpObject = Attribute::where(
+                [
+                    ['Id', '!=', $id],
+                    ['Name', $name],
+                    ['CategoryId', $categoryId]
+                ]
+            )->first();
+            if (!empty($tmpObject)) {
+                echo json_encode(['flag' => false, 'message' => '<div class="panel panel-default"><div class="panel-heading"><h3 class="panel-title">error</h3></div><div class="panel-body"><div class="alert alert-danger"><ul><li>name & category(duplicate)</li></ul></div></div></div>']);
+            } else {
+                echo json_encode(['flag' => true, 'message' => '']);
+            }
+        } else {
+            echo json_encode(['flag' => false, 'message' => 'name or category is empty']);
+        }
+    }
 }

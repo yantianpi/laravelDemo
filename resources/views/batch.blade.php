@@ -1,9 +1,9 @@
 @extends('layout.index')
 @section('custom-css')
-    <link href="/css/category.css" type="text/css" rel="stylesheet" />
+    <link href="/css/batch.css" type="text/css" rel="stylesheet" />
 @endsection
 @section('custom-js')
-    <script src="/js/category.js"></script>
+    <script src="/js/batch.js"></script>
 @endsection
 @section('pageContent')
     <div class="panel panel-default">
@@ -13,7 +13,7 @@
             </h3>
         </div>
         <div class="panel-body">
-            <form method="post" action="{{route('categorypage')}}" class="form-inline">
+            <form method="post" action="{{route('batchpage')}}" class="form-inline">
                 {{ csrf_field() }}
                 <div class="form-group">
                     <label>
@@ -78,7 +78,8 @@
                         <td>Id</td>
                         <td>Name</td>
                         <td>Alias</td>
-                        <td>Script</td>
+                        <td>Crontime</td>
+                        <td>Throughput</td>
                         <td>Status</td>
                         <td>Time</td>
                         <td>Operate</td>
@@ -93,7 +94,8 @@
                             <td>{{ $dataInfo->Id or '' }}</td>
                             <td>{{ $dataInfo->Name or '' }}</td>
                             <td>{{ $dataInfo->Alias or '' }}</td>
-                            <td>{{ $dataInfo->Script or '' }}</td>
+                            <td>{{ $dataInfo->Crontime or '' }}</td>
+                            <td>{{ $dataInfo->Throughput or '' }}</td>
                             <td>{{ $dataInfo->Status or '' }}</td>
                             <td>
                                 a:{{ $dataInfo->AddTime or '' }}
@@ -103,16 +105,10 @@
                                 t:{{ $dataInfo->Timestamp or '' }}
                             </td>
                             <td>
-                                <a href="javascript:void(0);" type="button" class="btn btn-info categoryDetail" data-id="{{ $dataInfo->Id }}">
-                                    详情
-                                </a>
-                                <a href="javascript:void(0);" type="button" class="btn btn-info categoryAttributeList" data-alias="{{ $dataInfo->Alias or '' }}" data-id="{{ $dataInfo->Id }}">
-                                    属性
-                                </a>
-                                <a type="button" target="_blank" class="btn btn-info" href="{{ url('/category/edit/' . $dataInfo->Id) . '?action=edit' }}">
+                                <a type="button" target="_blank" class="btn btn-info" href="{{ url('/batch/edit/' . $dataInfo->Id) . '?action=edit' }}">
                                     编辑
                                 </a>
-                                <a type="button" target="_blank" class="btn btn-info" href="{{ url('/category/edit') }}">
+                                <a type="button" target="_blank" class="btn btn-info" href="{{ url('/batch/edit') }}">
                                     添加
                                 </a>
                             </td>
@@ -120,7 +116,7 @@
                     @empty
                         <tr>
                             <td></td>
-                            <td colspan="7">{{ $notData or 'null' }}</td>
+                            <td colspan="8">{{ $notData or 'null' }}</td>
                         </tr>
                     @endforelse
                 </tbody>

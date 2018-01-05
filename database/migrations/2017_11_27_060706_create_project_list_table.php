@@ -22,6 +22,7 @@ class CreateProjectListTable extends Migration
                 $table->dateTime('AddTime')->comment('添加时间');
                 $table->dateTime('UpdateTime')->comment('更新时间');
                 $table->timestamp('Timestamp')->comment('系统更新时间戳');
+                $table->unique('Name');
             });
         }
     }

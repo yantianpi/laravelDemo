@@ -1,9 +1,9 @@
 @extends('layout.index')
 @section('custom-css')
-    <link href="/css/category.css" type="text/css" rel="stylesheet" />
+    <link href="/css/log.css" type="text/css" rel="stylesheet" />
 @endsection
 @section('custom-js')
-    <script src="/js/category.js"></script>
+    <script src="/js/log.js"></script>
 @endsection
 @section('pageContent')
     <div class="panel panel-default">
@@ -13,7 +13,7 @@
             </h3>
         </div>
         <div class="panel-body">
-            <form method="post" action="{{route('categorypage')}}" class="form-inline">
+            <form method="post" action="{{route('logpage')}}" class="form-inline">
                 {{ csrf_field() }}
                 <div class="form-group">
                     <label>
@@ -23,11 +23,25 @@
 
                 </div>
                 <div class="form-group">
-                    Status
-                    <select name="formData[Status]" class="form-control">
+                    <label>
+                        MapId
+                        <input type="number" name="formData[MapId]" class="form-control" placeholder="MapId" value="{{ $formData['MapId'] or '' }}" />
+                    </label>
+
+                </div>
+                <div class="form-group">
+                    <label>
+                        Keyword
+                        <input type="text" name="formData[Keyword]" class="form-control" placeholder="Keyword" value="{{ $formData['Keyword'] or '' }}" />
+                    </label>
+
+                </div>
+                <div class="form-group">
+                    Type
+                    <select name="formData[LogType]" class="form-control">
                         <option value="">>>请选择</option>
-                        @foreach($statusArray as $key => $value)
-                            <option value="{{ $key }}" @if(isset($formData['Status']) && $formData['Status'] == $key) selected @endif>{{ $value }}</option>
+                        @foreach($typeArray as $key => $value)
+                            <option value="{{ $key }}" @if(isset($formData['LogType']) && $formData['LogType'] == $key) selected @endif>{{ $value }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -75,26 +89,30 @@
                 <thead>
                     <tr>
                         <td></td>
-                        <td>Id</td>
-                        <td>Name</td>
-                        <td>Alias</td>
-                        <td>Script</td>
-                        <td>Status</td>
+                        <td>Id<hr style="width: 90%"/>MapId</td>
+                        <td>LogType</td>
+                        <td>Program</td>
+                        <td>Keyword</td>
+                        <td>HasAlert</td>
                         <td>Time</td>
                         <td>Operate</td>
                     </tr>
                 </thead>
                 <tbody>
                     @forelse($dataCollection as $dataInfo)
-                        <tr class="info @if($dataInfo->Status != 'ACTIVE') warning @endif">
+                        <tr class="info">
                             <td>
                                 <input class="processtatuscheckbox" id="a_{{ $dataInfo->Id }}" type="checkbox" value="{{ $dataInfo->Id }}" />
                             </td>
-                            <td>{{ $dataInfo->Id or '' }}</td>
-                            <td>{{ $dataInfo->Name or '' }}</td>
-                            <td>{{ $dataInfo->Alias or '' }}</td>
-                            <td>{{ $dataInfo->Script or '' }}</td>
-                            <td>{{ $dataInfo->Status or '' }}</td>
+                            <td>
+                                {{ $dataInfo->Id or '' }}
+                                <hr style="width: 90%"/>
+                                {{ $dataInfo->MapId or '' }}
+                            </td>
+                            <td>{{ $dataInfo->LogType or '' }}</td>
+                            <td>{{ $dataInfo->Program or '' }}</td>
+                            <td>{{ $dataInfo->Keyword or '' }}</td>
+                            <td>{{ $dataInfo->HasAlert or '' }}</td>
                             <td>
                                 a:{{ $dataInfo->AddTime or '' }}
                                 <hr style="width: 90%"/>
@@ -103,17 +121,8 @@
                                 t:{{ $dataInfo->Timestamp or '' }}
                             </td>
                             <td>
-                                <a href="javascript:void(0);" type="button" class="btn btn-info categoryDetail" data-id="{{ $dataInfo->Id }}">
+                                <a href="javascript:void(0);" type="button" class="btn btn-info" data-toggle="modal" data-id="{{ $dataInfo->Id }}" data-target="#oneModal" data-backdrop="static">
                                     详情
-                                </a>
-                                <a href="javascript:void(0);" type="button" class="btn btn-info categoryAttributeList" data-alias="{{ $dataInfo->Alias or '' }}" data-id="{{ $dataInfo->Id }}">
-                                    属性
-                                </a>
-                                <a type="button" target="_blank" class="btn btn-info" href="{{ url('/category/edit/' . $dataInfo->Id) . '?action=edit' }}">
-                                    编辑
-                                </a>
-                                <a type="button" target="_blank" class="btn btn-info" href="{{ url('/category/edit') }}">
-                                    添加
                                 </a>
                             </td>
                         </tr>

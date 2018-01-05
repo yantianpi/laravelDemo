@@ -78,6 +78,9 @@
                         <a class="list-group-item" href="{{ route('mailpage') }}" aria-controls="collapse_1">
                             mail
                         </a>
+                        <a class="list-group-item" href="{{ route('batchpage') }}" aria-controls="collapse_1">
+                            batch
+                        </a>
                         <a class="list-group-item" href="{{ route('logpage') }}" aria-controls="collapse_1">
                             log
                         </a>
@@ -85,26 +88,28 @@
                 </div>
             </div>
             <div class="col-xs-20">
-                @section('pageError')
-                    @if (count($errors) > 0)
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">
-                                {{ $pageName or 'Home' }} error
-                            </h3>
-                        </div>
-                        <div class="panel-body">
-                            <div class="alert alert-danger">
-                                <ul>
-                                    @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
+                <div class="errorDiv">
+                    @section('pageError')
+                        @if (count($errors) > 0)
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">
+                                        {{ $pageName or 'Home' }} error
+                                    </h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="alert alert-danger">
+                                        <ul>
+                                            @foreach ($errors->all() as $error)
+                                                <li>{{ $error }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    @endif
-                @show
+                        @endif
+                    @show
+                </div>
                 @section('pageContent')
                     <div class="panel panel-default">
                         <div class="panel-heading">
