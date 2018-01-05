@@ -78,6 +78,9 @@
                         <a class="list-group-item" href="{{ route('mailpage') }}" aria-controls="collapse_1">
                             mail
                         </a>
+                        <a class="list-group-item" href="{{ route('batchpage') }}" aria-controls="collapse_1">
+                            batch
+                        </a>
                         <a class="list-group-item" href="{{ route('logpage') }}" aria-controls="collapse_1">
                             log
                         </a>
