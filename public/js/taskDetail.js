@@ -36,6 +36,31 @@ $(function () {
         }
     });
 
+    var batch = $("#Batch").val();
+    if (batch == 0) {
+        $("#taskCronTime").val('');
+        $("#taskCronTime").removeAttr('readonly');
+    } else {
+        $.ajax({
+            url: '/batch/ajax/' + batch,
+            type: 'post',
+            data: {
+                '_token':CSRF_TOKEN
+            },
+            dataType: 'json',
+            success: function (data) {
+                if (data.flag != true) {
+                    $("#taskCronTime").val('');
+                } else {
+                    $("#taskCronTime").val(data.Crontime);
+                    $("#taskCronTime").attr('readonly', 'readonly');
+                }
+            },
+            error: function (data) {
+                $("#taskCronTime").val('');
+            }
+        });
+    }
     $("#Batch").on("change", function () {
         var inputDom = $(this);
         var batch = $(this).val();

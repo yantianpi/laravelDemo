@@ -16,7 +16,7 @@ $(function () {
                 modal.find('.modal-title').text('Task Detail');
                 modal.find('.modal-body').html(data);
                 modal.find('.modal-footer').html('<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>');
-                console.log(data);
+                // console.log(data);
             },
             error: function (data) {
                 modal.find('.modal-title').text('error');

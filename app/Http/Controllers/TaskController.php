@@ -3,6 +3,7 @@
 namespace Peteryan\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Peteryan\Attribute;
 use Peteryan\Batch;
 use Peteryan\Category;
@@ -220,64 +221,63 @@ class TaskController extends Controller
                 }
                 break;
             case 'doadd':
-                dd($request->all());
-                $categoryId = $request->input('formData.attributeCategory', 0);
-                $attributeName = $request->input('formData.attributeName', '');
-                $attributeAlias = $request->input('formData.attributeAlias', '');
-                $attributeContentType = $request->input('formData.attributeContentType', 'OTHER');
-                $attributeDefaultMessage = $request->input('formData.attributeDefaultMessage', '');
-                $attributeStatus = $request->input('formData.attributeStatus', 'ACTIVE');
-                $tmpWhereArray = [
-                    ['CategoryId', $categoryId],
-                    ['Name', $attributeName],
-                ];
-                $tmpCollection = Attribute::where($tmpWhereArray)->get();
-                if (!$tmpCollection->isEmpty()) {
-                    $validateObject = Validator::make([], []);
-                    $validateObject->errors()->add('errorinfo', 'duplicate record');
-                    return back()->withErrors($validateObject)->withInput();
-                } else {
-                    try {
-                        $tmpArray = [];
-                        if (!empty($categoryId)) {
-                            $tmpArray['CategoryId'] = $categoryId;
-                        }
-                        if (!empty($attributeName)) {
-                            $tmpArray['Name'] = $attributeName;
-                        }
-                        if (!empty($attributeAlias)) {
-                            $tmpArray['Alias'] = $attributeAlias;
-                        }
-                        if (isset($this->contentTypeArray[$attributeContentType])) {
-                            $tmpArray['ContentType'] = $attributeContentType;
-                        }
-                        if (!empty($attributeDefaultMessage)) {
-                            $tmpArray['DefaultMessage'] = $attributeDefaultMessage;
-                        }
-                        if (isset($this->statusArray[$attributeStatus])) {
-                            $tmpArray['Status'] = $attributeStatus;
-                        }
-                        $tmpTime = date('Y-m-d H:i:s');
-                        $tmpArray['AddTime'] = $tmpTime;
-                        $tmpArray['UpdateTime'] = $tmpTime;
-                        $attributeId = DB::table('attribute_list')->insertGetId($tmpArray);
-                        return redirect("/attribute/edit/{$attributeId}?action=edit");
-                    } catch (\Exception $e) {
-                        return back()->withErrors([$e->getMessage()])->withInput();
+                $projectId = intval($request->input('formData.taskProject', 0));
+                $categoryId = intval($request->input('formData.taskCategory', 0));
+                $taskName = $request->input('formData.taskName', '');
+                $taskDescription = $request->input('formData.taskDescription', '');
+                $taskCronTime = $request->input('formData.taskCronTime', '');
+                $batch = intval($request->input('formData.Batch', 0));
+                $taskAlertLimit = intval($request->input('formData.taskAlertLimit', 1));
+                $taskNotifyType = $request->input('formData.taskNotifyType', 'OTHER');
+                $taskNotifyContent = json_encode($request->input('formData.notify', []));
+                $taskContent = json_encode($request->input('formData.content', []));
+                $taskStatus = $request->input('formData.taskStatus', 'ACTIVE');
+                try {
+                    $tmpArray = [];
+                    $tmpArray['ProjectId'] = $projectId;
+                    $tmpArray['CategoryId'] = $categoryId;
+                    $tmpArray['Batch'] = $batch;
+                    $tmpArray['AlertLimit'] = $taskAlertLimit;
+                    $tmpArray['NotifyContent'] = $taskNotifyContent;
+                    $tmpArray['Content'] = $taskContent;
+                    if (!empty($taskName)) {
+                        $tmpArray['Name'] = $taskName;
                     }
+                    if (!empty($taskDescription)) {
+                        $tmpArray['Description'] = $taskDescription;
+                    }
+                    if (isset($this->notifyTypeArray[$taskNotifyType])) {
+                        $tmpArray['NotifyType'] = $taskNotifyType;
+                    }
+                    if (!empty($taskCronTime)) {
+                        $tmpArray['CronTime'] = $taskCronTime;
+                    }
+                    if (isset($this->statusArray[$taskStatus])) {
+                        $tmpArray['Status'] = $taskStatus;
+                    }
+                    $tmpTime = date('Y-m-d H:i:s');
+                    $tmpArray['StartTime'] = $tmpTime;
+                    $tmpArray['EndTime'] = $tmpTime;
+                    $tmpArray['AddTime'] = $tmpTime;
+                    $tmpArray['UpdateTime'] = $tmpTime;
+                    $taskId = DB::table('task_list')->insertGetId($tmpArray);
+                    return redirect("/task/edit/{$taskId}?action=edit");
+                } catch (\Exception $e) {
+                    return back()->withErrors([$e->getMessage()])->withInput();
                 }
                 break;
             case 'add':
             default:
-                dd($request->all());
-                return view('attributeDetail', [
-                    'contentTypeArray' => $this->contentTypeArray,
+                return view('taskDetail', [
                     'statusArray' => $this->statusArray,
-                    'title' => 'Attribute(Add | Edit)',
-                    'pageName' => 'Attribute(Add | Edit)',
-                    'requestPath' => url('/attribute/edit/'),
+                    'notifyTypeArray' => $this->notifyTypeArray,
+                    'title' => 'Task(Add | Edit)',
+                    'pageName' => 'Task(Add | Edit)',
+                    'requestPath' => url('/task/edit/' . $id),
                     'action' => 'doadd',
                     'categoryCollection' => $categoryCollection,
+                    'projectCollection' => $projectCollection,
+                    'batchCollection' => $batchCollection,
                 ]);
         }
 

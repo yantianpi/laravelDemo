@@ -26,6 +26,12 @@
     </li>
     <li class="list-group-item">
         <span class="badge">
+            NotifyType
+        </span>
+        {{ $taskObject->NotifyType or '' }}
+    </li>
+    <li class="list-group-item">
+        <span class="badge">
             CurrentStatus
         </span>
         {{ $taskObject->CurrentStatus or '' }}

@@ -27,6 +27,7 @@ class TaskValidateRequest extends FormRequest
         return [
             'formData.taskName' => 'sometimes|required',
             'formData.taskCategory' => [
+                'bail',
                 'sometimes',
                 'required',
                 'numeric',
@@ -35,6 +36,7 @@ class TaskValidateRequest extends FormRequest
                 }),
             ],
             'formData.taskProject' => [
+                'bail',
                 'sometimes',
                 'required',
                 'numeric',
@@ -42,8 +44,8 @@ class TaskValidateRequest extends FormRequest
                     $query->where('Status', 'ACTIVE');
                 }),
             ],
-            'formData.Batch' => 'sometimes|numeric|min:0|required',
-            'formData.taskAlertLimit' => 'sometimes|numeric|min:1|required',
+            'formData.Batch' => 'bail|sometimes|required|numeric|min:0',
+            'formData.taskAlertLimit' => 'bail|sometimes|required|numeric|min:1',
         ];
     }
 
@@ -64,7 +66,7 @@ class TaskValidateRequest extends FormRequest
             'formData.taskProject.exists'  => '项目不存在',
             'formData.Batch.required'  => '批次必选',
             'formData.Batch.numeric' => '批次不合法',
-            'formData.taskAlertLimit.required'  => '预警上限必选',
+            'formData.taskAlertLimit.required'  => '预警上限必填',
             'formData.taskAlertLimit.numeric' => '预警上限必须是整数',
             'formData.taskAlertLimit.min' => '预警上限必须大于0',
         ];

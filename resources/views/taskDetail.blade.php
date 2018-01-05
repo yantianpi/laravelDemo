@@ -54,8 +54,8 @@
             <label for="taskCronTime" class="col-xs-4 control-label">
                 CronTime<span class="red">*</span>
             </label>
-            <div class="col-xs-3 has-feedback">
-                <input type="text" class="form-control" id="taskCronTime" name="formData[taskCronTime]" value="@if(isset($dataObject->CronTime)){{ old('formData.taskCronTime', $dataObject->CronTime) }}@else{{ old('formData.taskCronTime', '') }}@endif" @if($dataObject->Batch != 0) readonly @endif />
+            <div class="col-xs-5 has-feedback">
+                <input type="text" class="form-control" id="taskCronTime" name="formData[taskCronTime]" value="@if(isset($dataObject->CronTime)){{ old('formData.taskCronTime', $dataObject->CronTime) }}@else{{ old('formData.taskCronTime', '') }}@endif" @if(isset($dataObject->Batch) && $dataObject->Batch != 0) readonly @endif />
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
             </div>
             <div class="col-xs-offset-1 col-xs-4">
